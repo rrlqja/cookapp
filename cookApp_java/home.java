@@ -1,12 +1,15 @@
 package com.example.cookapp1;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +35,7 @@ public class home extends AppCompatActivity {
     TextView textView1, textView2;
     Button button1, button2;
     SwipeRefreshLayout swipeRefreshLayout1;
+    ImageView imageView1;
 
     String userID;
 
@@ -40,6 +45,8 @@ public class home extends AppCompatActivity {
     String cont_url = "http://15.165.241.115/db/cont.php";
     String scrollJson_url = "http://15.165.241.115/db/countselect.php";
     String onescrollJson_url = "http://15.165.241.115/db/onecountselect.php";
+    String original_url = "http://15.165.241.115";
+    String img_url = "http://15.165.241.115/upload_files/22.jpg";
 
     private static final String TAG = "home";
     RecyclerView recyclerView;
@@ -71,13 +78,19 @@ public class home extends AppCompatActivity {
     String input_order;
     String input_order_by;
 
+    Bitmap bitmap;
+
     getJSON getJSON;
+    getBit getBit;
+
+    HashMap<Integer, String> bitmapHash = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        textView1 = findViewById(R.id.tx1);
         textView2 = findViewById(R.id.tx2);
         button1 = findViewById(R.id.bt1);
         button2 = findViewById(R.id.bt2);
@@ -160,7 +173,7 @@ public class home extends AppCompatActivity {
             public void run() {
                 initAdapter();
             }
-        }, 1500);
+        }, 2500);
 
         Toast.makeText(home.this, "새로고침중", Toast.LENGTH_LONG).show();
         initScrollListener();
@@ -177,7 +190,6 @@ public class home extends AppCompatActivity {
             count++;
 
             getJ(result);
-
 
         }
 
@@ -257,10 +269,12 @@ public class home extends AppCompatActivity {
                     recyclerItem.setLike(result_json.getInt("mlike"));
                     recyclerItem.setDate(result_json.getString("con_date"));
                     recyclerItem.setNum(result_json.getInt("con_num"));
+                    recyclerItem.setImg(original_url + result_json.getString("img_src"));
+
                     recyclerItemList.add(recyclerItem);
+
                     llist.add(recyclerItem);
 
-//                    textView2.append(json.getString("title"));
                     textView2.setText(String.valueOf(recyclerItemList.size()));
                 }
 
@@ -271,110 +285,27 @@ public class home extends AppCompatActivity {
 
     }
 
-//    public class more_getJSON extends AsyncTask<String, Void, String> {
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            return getS(strings[0], strings[1]);
-//        }
-//
-//        protected void onPostExecute(String result) {
-//            count++;
-//            getJ(result);
-//        }
-//
-//        private String getS(String str, String str_count) {
-//            HttpURLConnection conn = null;
-//            String param = "count=" + str_count;
-//            try {
-//                URL url = new URL(str);
-//                conn = (HttpURLConnection) url.openConnection();
-//
-//                conn.setReadTimeout(5000);
-//                conn.setConnectTimeout(5000);
-//                conn.setRequestMethod("POST");
-//                conn.connect();
-//
-//                OutputStream outputStream = conn.getOutputStream();
-//                outputStream.write(param.getBytes("UTF-8"));
-//                outputStream.flush();
-//                outputStream.close();
-//
-//                int response = conn.getResponseCode();
-//
-//                InputStream iStream;
-//                if (response == HttpURLConnection.HTTP_OK) {
-//                    iStream = conn.getInputStream();
-//                } else {
-//                    iStream = conn.getErrorStream();
-//                }
-//
-//                InputStreamReader inputStreamReader = new InputStreamReader(iStream, "UTF-8");
-//                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//
-//                StringBuilder sb = new StringBuilder();
-//                String line = "";
-//
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    sb.append(line);
-//                }
-//
-//                bufferedReader.close();
-//
-//                return sb.toString();
-//
-//            } catch (Exception e) {
-//                return null;
-//            }
-//
-//        }
-//
-//        private void getJ(String page) {
-//
-//            try {
-//                JSONObject json = new JSONObject(page);
-//
-//                JSONArray jArr = json.getJSONArray("result");
-//
-//                for (int i = 0; i < jArr.length(); i++) {
-//                    json = jArr.getJSONObject(i);
-//
-//                    recyclerItem = new RecyclerItem();
-//                    recyclerItem.setTitle(json.getString("title"));
-//                    recyclerItem.setWriter(json.getString("writer"));
-//                    recyclerItem.setCont(json.getString("cont"));
-//                    recyclerItemList.add(recyclerItem);
-//                    llist.add(recyclerItem);
-//
-////                    textView2.append(json.getString("title"));
-//                    textView2.setText(recyclerItemList.size());
-//                }
-//
-//            } catch (Exception e) {
-//
-//            }
-//        }
-//    }
-//    private void firstData() {
-//        Log.d(TAG, "firstData:");
-////        for(int a=0;a<30;a++) {
-////            contList.add("Item " + a);
-////            titleallList.add("Title " + a);
-////            writerallList.add("Writer " + a);
-////
-////            recyclerItem = new RecyclerItem();
-////            recyclerItem.setTitle(titleallList.get(a));
-////            recyclerItem.setWriter(writerallList.get(a));
-////            recyclerItem.setCont(contList.get(a));
-////
-////            recyclerItemList.add(recyclerItem);
-////        }
-//
-//        for (int i = 0; i < 10; i++) {
-//
-//            llist.add(recyclerItemList.get(i));
-//        }
-//
-//    }
+    public class getBit extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            String urli = strings[0];
+            Bitmap bitmap = null;
+
+            try {
+                InputStream in = new URL(urli).openStream();
+                bitmap = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                return null;
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+//            recyclerItem.setImg(result);
+            imageView1.setImageBitmap(result);
+        }
+    }
+
 
     private void initAdapter() {
         recyclerViewAdapter = new RecyclerViewAdapter(llist);
@@ -397,8 +328,6 @@ public class home extends AppCompatActivity {
                 if (!isLoading) {
                     if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == llist.size()-1) {
                         dataMore();
-//                        more_getJSON more_getJSON = new more_getJSON();
-//                        more_getJSON.execute(scrollJson_url, String.valueOf(count));
 
                         isLoading = true;
                         Toast.makeText(home.this, "로딩중", Toast.LENGTH_LONG).show();
@@ -421,42 +350,6 @@ public class home extends AppCompatActivity {
                 isLoading = false;
             }
         }, 2000);
-//        llist.add(null);
-//        recyclerViewAdapter.notifyItemInserted(llist.size() - 1);
-//
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                llist.remove(llist.size() - 1);
-//                int scrollPosition = llist.size();
-//                recyclerViewAdapter.notifyItemRemoved(scrollPosition+1);
-//                recyclerViewAdapter.notifyItemRemoved(scrollPosition);
-//                recyclerViewAdapter.notifyItemRemoved(scrollPosition+2);
-//                recyclerViewAdapter.notifyItemRemoved(scrollPosition+3);
-//
-//                getJSON = new getJSON();
-//                getJSON.execute(scrollJson_url, String.valueOf(count));
-//
-////                int currentSize = scrollPosition;
-////                int nextLimit = currentSize + 10;
-////                for (int i = currentSize; i < nextLimit; i++) {
-////                    if (i == recyclerItemList.size()+10) {
-////                        return;
-////                    }
-////
-//////                    recyclerItem = new RecyclerItem();
-//////                    recyclerItem.setTitle(titleallList.get(i));
-//////                    recyclerItem.setWriter(writerallList.get(i));
-//////                    recyclerItem.setCont(contList.get(i));
-//////                    llist.add(recyclerItem);
-////
-////                }
-//
-//                recyclerViewAdapter.notifyDataSetChanged();
-//                isLoading = false;
-//            }
-//        }, 2000);
 
     }
 

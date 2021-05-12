@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,16 +27,19 @@ import androidx.appcompat.app.AppCompatActivity;
 public class iJson extends AppCompatActivity {
 
     TextView textView1, textView2;
-    ImageView imageView1;
+    ImageView imageView1, imageView2;
     Button button1;
 
     HashMap<Integer, String> img = new HashMap<>();
     HashMap<Integer, String> iname = new HashMap<>();
 
-    String oriUrl = "http://15.165.241.115/";
+    String oriUrl = "http://15.165.241.115";
     String url = "http://15.165.241.115/db/showJimg.php";
 //    String url = "http://15.165.241.115/db/showimg.php";
     String imgurl = "http://15.165.241.115/upload_files/22.jpg";
+
+    InputStream inputStream;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,15 @@ public class iJson extends AppCompatActivity {
         imageView1 = findViewById(R.id.iv1);
         textView1 = findViewById(R.id.tx1);
         textView2 = findViewById(R.id.tx2);
+        imageView2 = findViewById(R.id.iv2);
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                imageView2.setImageBitmap(bitmap);
+            }
+        }, 3000);
 
     }
 
@@ -88,9 +101,10 @@ public class iJson extends AppCompatActivity {
         public void onPostExecute(String result) {
             getJ(result);
             String i = oriUrl + img.get(0).substring(2);
+            textView1.setText(img.get(0).substring(2));
 //            textView1.setText(oriUrl + img.get(0).substring(2));
-            textView1.setText(i);
-            textView2.setText(imgurl);
+//            textView1.setText(i);
+//            textView2.setText(imgurl);
 
             downBit downBit = new downBit();
             downBit.execute(i);
@@ -161,19 +175,22 @@ public class iJson extends AppCompatActivity {
         @Override
         protected Bitmap doInBackground(String... strings) {
             String urli = strings[0];
-            Bitmap bitmap = null;
+            Bitmap bitmap2 = null;
 
             try {
                 InputStream in = new URL(urli).openStream();
-                bitmap = BitmapFactory.decodeStream(in);
+                bitmap2 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
                 return null;
             }
-            return bitmap;
+            textView2.setText(urli);
+            return bitmap2;
+
         }
 
         protected void onPostExecute(Bitmap result) {
             imageView1.setImageBitmap(result);
+            bitmap = result;
         }
     }
 }

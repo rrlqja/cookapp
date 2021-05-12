@@ -13,8 +13,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="300dp"
             android:orientation="vertical">
+            <TextView
+                android:text="기본 텍스트1"
+                android:id="@+id/tx1"
+                android:layout_width="match_parent"
+                android:layout_height="100dp">
+            </TextView>
             <TextView
                 android:text="기본 텍스트2"
                 android:id="@+id/tx2"

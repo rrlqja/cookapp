@@ -1,8 +1,10 @@
 package com.example.cookapp1;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -69,6 +71,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         TextView tvLike;
         TextView tvDate;
         TextView tvNum;
+        ImageView tvImg;
+//        TextView tvImg;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -79,6 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tvLike = itemView.findViewById(R.id.tvLike);
             tvDate = itemView.findViewById(R.id.tvDate);
             tvNum = itemView.findViewById(R.id.tvNum);
+            tvImg = itemView.findViewById(R.id.tvImg);
         }
     }
 
@@ -105,6 +110,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         String like = mItemList.get(position).getLike();
         String date = mItemList.get(position).getDate();
         String num = mItemList.get(position).getNum();
+        Bitmap img = mItemList.get(position).getImg();
+//        String img = mItemList.get(position).getImg();
 
         viewHolder.tvItem.setText(item);
         viewHolder.tvTitle.setText(title);
@@ -112,5 +119,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         viewHolder.tvLike.setText(like);
         viewHolder.tvDate.setText(date);
         viewHolder.tvNum.setText(String.valueOf(num));
+        viewHolder.tvImg.setImageBitmap(img);
+//        viewHolder.tvImg.setText(img);
+
     }
 }

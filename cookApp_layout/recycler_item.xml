@@ -69,6 +69,22 @@
                 android:padding="10dp"
                 android:text="Item X" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+            <ImageView
+                android:id="@+id/tvImg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp">
+            </ImageView>
+<!--            <TextView-->
+<!--                android:id="@+id/tvImg"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:padding="10dp">-->
+<!--            </TextView>-->
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

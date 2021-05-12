@@ -1,5 +1,12 @@
 package com.example.cookapp1;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+
+import java.io.InputStream;
+import java.net.URL;
+
 public class RecyclerItem {
     private String title;
     private String writer;
@@ -7,6 +14,42 @@ public class RecyclerItem {
     private String like=String.valueOf(0);
     private String date;
     private String num;
+    private Bitmap img;
+    bitchange bitchange;
+
+    public Bitmap getImg() {
+        return img;
+    }
+
+    public void setImg(Bitmap img) {
+        this.img = img;
+    }
+
+    public void setImg(String string) {
+        bitchange = new bitchange();
+        bitchange.execute(string);
+    }
+
+    public class bitchange extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... strings) {
+            String urli = strings[0];
+            Bitmap bitmap = null;
+
+            try {
+                InputStream in = new URL(urli).openStream();
+                bitmap = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                return null;
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            img = result;
+        }
+    }
+
 
     public String getNum() {
         return num;
