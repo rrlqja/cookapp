@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,7 @@ import java.net.URL;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class go_singup extends AppCompatActivity {
+public class go_signup extends AppCompatActivity {
 
     TextView textView;
 
@@ -30,7 +29,7 @@ public class go_singup extends AppCompatActivity {
 
     Button button1;
 
-    String strUrl = "http://15.165.241.115/db/singup.php";
+    String strUrl = "http://15.165.241.115/db/signup.php";
     String abab = "http://15.165.241.115/db/findID.php";
 
     String id, name, pwd;
@@ -41,7 +40,7 @@ public class go_singup extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_go_singup);
+        setContentView(R.layout.activity_go_signup);
 
         textView = findViewById(R.id.inpu_text);
         button1 = findViewById(R.id.id_chk);
