@@ -33,7 +33,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class home extends AppCompatActivity {
     TextView textView1, textView2;
-    Button button1, button2;
+    Button button1, button2, button3;
     SwipeRefreshLayout swipeRefreshLayout1;
     ImageView imageView1;
 
@@ -96,8 +96,8 @@ public class home extends AppCompatActivity {
         button2 = findViewById(R.id.bt2);
         swipeRefreshLayout1 = findViewById(R.id.swip1);
 
-        Intent intent = getIntent();
-        userID = intent.getStringExtra("userid");
+        Intent getintent = getIntent();
+        userID = getintent.getStringExtra("userid");
 
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -310,6 +310,18 @@ public class home extends AppCompatActivity {
     private void initAdapter() {
         recyclerViewAdapter = new RecyclerViewAdapter(llist);
         recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                Intent intent = new Intent(home.this, contView.class);
+//                llist.get(pos).getNum();
+//                intent.putExtra("pos", String.valueOf(pos));
+                intent.putExtra("pos", llist.get(pos).getNum());
+                intent.putExtra("position", Integer.parseInt(llist.get(pos).getNum()));
+                startActivity(intent);
+
+            }
+        });
     }
     private void initScrollListener() {
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){

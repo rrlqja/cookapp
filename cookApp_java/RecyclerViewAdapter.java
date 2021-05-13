@@ -18,6 +18,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final int VIEW_TYPE_ITEM=0;
     private final int VIEW_TYPE_LOADING = 1;
 
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+    }
+    private OnItemClickListener mListener = null;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.mListener = listener;
+    }
+
     //    public List<String> mItemList;
     public List<RecyclerItem> mItemList;
 
@@ -84,6 +92,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             tvDate = itemView.findViewById(R.id.tvDate);
             tvNum = itemView.findViewById(R.id.tvNum);
             tvImg = itemView.findViewById(R.id.tvImg);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        if (mListener != null) {
+                            mListener.onItemClick(v, pos);
+                        }
+                    }
+                }
+            });
+
         }
     }
 

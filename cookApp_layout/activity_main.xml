@@ -95,6 +95,12 @@
                     android:text="이미지 json"
                     android:onClick="imgJson">
                 </Button>
+                <Button
+                    android:id="@+id/bt8"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:onClick="contview">
+                </Button>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

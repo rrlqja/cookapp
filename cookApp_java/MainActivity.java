@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -134,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void signUp(View view) {
-        Intent intent = new Intent(this, go_singup.class);
+        Intent intent = new Intent(this, go_signup.class);
         startActivity(intent);
     }
 
@@ -156,6 +155,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void imgJson(View view) {
         Intent intent = new Intent(this, iJson.class);
+        startActivity(intent);
+    }
+
+    public void contview(View view) {
+        Intent intent = new Intent(this, contView.class);
         startActivity(intent);
     }
 }

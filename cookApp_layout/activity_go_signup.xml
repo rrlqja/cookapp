@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".go_signup">
+
+    <LinearLayout
+        android:background="#FAFAFA"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/inpu_one"
+                    android:layout_weight="5"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:hint="ID"
+                    android:background="@drawable/edit_border">
+                </EditText>
+
+                <Button
+                    android:id="@+id/id_chk"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:backgroundTint="#F6CECE"
+                    android:onClick="go_idchk"
+                    android:textSize="5pt"
+                    android:textColor="@color/black"
+                    android:text="중복확인"></Button>
+            </LinearLayout>
+            <EditText
+                android:id="@+id/inpu_two"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:hint="NAME"
+                android:background="@drawable/edit_border">
+            </EditText>
+            <EditText
+                android:id="@+id/inpu_three"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:hint="password"
+                android:background="@drawable/edit_border">
+            </EditText>
+            <Button
+                android:id="@+id/inpu_bt"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="입력"
+                android:textColor="@color/black"
+                android:backgroundTint="#5882FA"
+                android:onClick="inpu">
+            </Button>
+            <TextView
+                android:id="@+id/inpu_text"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

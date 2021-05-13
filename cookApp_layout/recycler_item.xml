@@ -71,7 +71,7 @@
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="200dp">
             <ImageView
                 android:id="@+id/tvImg"
                 android:layout_width="match_parent"
