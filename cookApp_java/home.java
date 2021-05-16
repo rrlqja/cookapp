@@ -90,7 +90,6 @@ public class home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        textView1 = findViewById(R.id.tx1);
         textView2 = findViewById(R.id.tx2);
         button1 = findViewById(R.id.bt1);
         button2 = findViewById(R.id.bt2);
@@ -363,6 +362,13 @@ public class home extends AppCompatActivity {
             }
         }, 2000);
 
+    }
+
+    public void createcont(View view) {
+        Toast.makeText(getApplicationContext(), "터치터치", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(home.this, createCont.class);
+        intent.putExtra("userid", userID);
+        startActivity(intent);
     }
 
 }
