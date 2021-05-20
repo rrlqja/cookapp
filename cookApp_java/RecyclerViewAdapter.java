@@ -26,12 +26,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         this.mListener = listener;
     }
 
-    //    public List<String> mItemList;
     public List<RecyclerItem> mItemList;
-
-    //    public RecyclerViewAdapter(List<String> itemList) {
-//        mItemList = itemList;
-//    }
     public RecyclerViewAdapter(List<RecyclerItem> itemList) {
         mItemList = itemList;
     }

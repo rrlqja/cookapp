@@ -40,13 +40,10 @@ public class home extends AppCompatActivity {
     String userID;
 
     static int count = 0;
-    static int length = 0;
 
-    String cont_url = "http://15.165.241.115/db/cont.php";
     String scrollJson_url = "http://15.165.241.115/db/countselect.php";
     String onescrollJson_url = "http://15.165.241.115/db/onecountselect.php";
     String original_url = "http://15.165.241.115";
-    String img_url = "http://15.165.241.115/upload_files/22.jpg";
 
     private static final String TAG = "home";
     RecyclerView recyclerView;
@@ -61,29 +58,18 @@ public class home extends AppCompatActivity {
     RecyclerItem recyclerItem;
 
     String[] order = {"con_num", "mlike"};
-//    String order = "con_num";
     static int point_order = 0;
 
     String[] order_by = {"desc", "asc"};
     static int point_order_by = 0;
 
-    //    String like_order = "con_num";
     String[] like_order = {"con_num", "mlike"};
-//    String like_order = "desc";
     static int point_like_order = 1;
 
     String[] like_order_by = {"desc", "asc"};
     static int point_like_order_by = 0;
 
-    String input_order;
-    String input_order_by;
-
-    Bitmap bitmap;
-
     getJSON getJSON;
-    getBit getBit;
-
-    HashMap<Integer, String> bitmapHash = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,15 +237,12 @@ public class home extends AppCompatActivity {
                 JSONObject json = new JSONObject(page);
 
                 JSONArray jArr = json.getJSONArray("result");
-//                JSONArray like_jArr = json.getJSONArray("like_result");
 
                 JSONObject result_json;
-//                JSONObject like_json;
 
                 for (int i = 0; i < jArr.length(); i++) {
 
                     result_json = jArr.getJSONObject(i);
-//                    like_json = like_jArr.getJSONObject(i);
 
                     recyclerItem = new RecyclerItem();
                     recyclerItem.setTitle(result_json.getString("title"));
@@ -300,7 +283,6 @@ public class home extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
-//            recyclerItem.setImg(result);
             imageView1.setImageBitmap(result);
         }
     }
@@ -313,8 +295,6 @@ public class home extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int pos) {
                 Intent intent = new Intent(home.this, contView.class);
-//                llist.get(pos).getNum();
-//                intent.putExtra("pos", String.valueOf(pos));
                 intent.putExtra("pos", llist.get(pos).getNum());
                 intent.putExtra("position", Integer.parseInt(llist.get(pos).getNum()));
                 startActivity(intent);
