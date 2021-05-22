@@ -102,7 +102,7 @@
                 android:text="edittext 보기"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:onClick="show_testlist">
+                android:onClick="show_ingre_testlist">
             </Button>
             <TextView
                 android:text="초기 텍스트"
@@ -139,6 +139,12 @@
                     android:onClick="addseasonList">
                 </Button>
             </LinearLayout>
+            <Button
+                android:text="edittext 보기"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:onClick="show_season_testlist">
+            </Button>
 
             <TextView
                 android:background="#C8C7C3"
@@ -243,12 +249,82 @@
                     </ImageView>
                 </LinearLayout>
             </LinearLayout>
+<!--            <Button-->
+<!--                android:id="@+id/bb1"-->
+<!--                android:text="AA테스트"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="100dp">-->
+<!--            </Button>-->
+<!--            <Button-->
+<!--                android:id="@+id/toststr"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="100dp">-->
+<!--            </Button>-->
+
             <Button
-                android:id="@+id/bb1"
-                android:text="AA테스트"
+                android:id="@+id/save_recipe"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:onClick="saveRecipe">
+            </Button>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/sv_ingre_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                </TextView>
+                <TextView
+                    android:id="@+id/sv_ingre"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                </TextView>
+                <TextView
+                    android:id="@+id/sv_ingre_we"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                </TextView>
+                <TextView
+                    android:id="@+id/sv_season_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                </TextView>
+                <TextView
+                    android:id="@+id/sv_season"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                </TextView>
+                <TextView
+                    android:id="@+id/sv_season_we"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                </TextView>
+                <TextView
+                    android:id="@+id/sv_sequence_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                </TextView>
+                <TextView
+                    android:id="@+id/sv_sequence"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                </TextView>
+                <ImageView
+                    android:id="@+id/sv_sequence_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+                </ImageView>
+            </LinearLayout>
+            <TextView
+                android:text="resultresultingres"
+                android:id="@+id/resultingre"
                 android:layout_width="match_parent"
                 android:layout_height="100dp">
-            </Button>
+            </TextView>
 
             <TextView
                 android:id="@+id/tv1"

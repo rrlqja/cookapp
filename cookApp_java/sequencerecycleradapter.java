@@ -26,13 +26,22 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
     static int sequence_num = 0;
 
     ArrayList<sequence_item> edit_Arr=new ArrayList<>();
-    String[] strings = new String[20];
     sequence_item sequence_item;
 
-    ArrayList<BitmapDrawable> bitmapDrawables = new ArrayList<>();
+//    ArrayList<BitmapDrawable> bitmapDrawables = new ArrayList<>();
 
     private final int VIEW_TYPE_ITEM=0;
     private final int VIEW_TYPE_LOADING = 1;
+
+    static String[] edHint = {" 예) 고기를 먹기 좋은 크기로 자릅니다.", " 예) 채소를 깨끗히 세척합니다.", " 예) 고기와 채소를 볶아줍니다."};
+    static int edHint_point = 0;
+
+
+
+    String[] strings = new String[20];
+    BitmapDrawable[] drawables = new BitmapDrawable[20];
+
+
 
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
@@ -43,9 +52,9 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     public ArrayList<sequence_item> mItemList;
-    public sequencerecycleradapter(ArrayList<sequence_item> mItemList, ArrayList<BitmapDrawable> bitmapDrawables) {
+    public sequencerecycleradapter(ArrayList<sequence_item> mItemList) {
         this.mItemList = mItemList;
-        this.bitmapDrawables = bitmapDrawables;
+//        this.bitmapDrawables = bitmapDrawables;
     }
 
     @NonNull
@@ -130,7 +139,10 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
 
     private void populateItemRows(itemViewHolder viewHolder, int position) {
 
+        drawables[position] = mItemList.get(position).getSequence_img();
+
         mItemList.get(position).setSequence_num(String.valueOf(position+1));
+        mItemList.get(position).setSequence_img(mItemList.get(position).getSequence_img());
 //        if (bitmapDrawables.get(position) != null) {
 //            mItemList.get(position).setSequence_img(bitmapDrawables.get(position));
 //        }
@@ -138,6 +150,8 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
         String num = mItemList.get(position).getSequence_num();
         String cont = mItemList.get(position).getSequence_cont();
         BitmapDrawable img = mItemList.get(position).getSequence_img();
+
+        viewHolder.editText1.setHint(edHint[position % 3]);
 
         viewHolder.editText1.setText(cont);
         sequence_item = new sequence_item();
@@ -179,8 +193,31 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
         return strings;
     }
 
+    public BitmapDrawable[] getBit() {
+        BitmapDrawable[] bitmapDrawables = new BitmapDrawable[20];
+
+//        for (int i = 0; i < mItemList.size(); i++) {
+//            bitmapDrawables[i] = mItemList.get(i).getSequence_img();
+//        }
+        for (int i = 0; i < drawables.length; i++) {
+            bitmapDrawables[i] = drawables[i];
+        }
+
+        return bitmapDrawables;
+    }
+
+    public String getcont(int a) {
+        return mItemList.get(a).getSequence_cont();
+    }
+
     public void setBit(int position, BitmapDrawable bitmapDrawable) {
         mItemList.get(position).setSequence_img(bitmapDrawable);
+    }
+
+    public sequence_item geted1(int i) {
+        sequence_item sequence_item = mItemList.get(i);
+
+        return sequence_item;
     }
 
 }
