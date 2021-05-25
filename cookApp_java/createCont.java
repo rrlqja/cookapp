@@ -1,7 +1,12 @@
 package com.example.cookapp1;
 
+import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,10 +14,12 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,6 +29,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -29,23 +38,38 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class createCont extends AppCompatActivity {
+
+    saveContItem saveContItem;
+
+    EditText editText1, editText2;
+    ImageView imageView1;
+
+    String title = "";
+    Bitmap cont_img;
+    Uri cont_img_Uri;
+    String cont_img_absol_uri;
+    String cont = "";
+
+    static boolean title_pass = false;
+    static boolean cont_img_pass = false;
+    static boolean cont_pass = false;
+
+    static boolean imgpass = false;
+
     TextView textView1;
-    ImageView imageView1, imageView2;
+//    ImageView imageView2;
     ListView listView1, listView2;
 
-    //    ListView listView3;
     RecyclerView recyclerView1;
 
-    ImageButton imageButton1;
-
-    TextView textView2;
-
-    ArrayList<ingre_item> list_item = new ArrayList<>();
+//    TextView textView2;
 
     ArrayList<Integer> ingre_num = new ArrayList<>();
     ArrayList<String> ingre_list = new ArrayList<>();
@@ -59,32 +83,23 @@ public class createCont extends AppCompatActivity {
 
     ArrayList<Integer> sequence_num = new ArrayList<>();
     ArrayList<String> sequence_cont = new ArrayList<>();
-    ArrayList<BitmapDrawable> sequence_img = new ArrayList<>();
+    ArrayList<Bitmap> sequence_img = new ArrayList<>();
+    ArrayList<Uri> sequence_img_uri = new ArrayList<>();
     static boolean sequence_pass = false;
-
-//    static int sequence_img_point = 0;
 
     ingrelistAdapter ingre_listAdapter;
     seasonlistAdapter season_listAdapter;
-    sequencelistadapter sequence_listAdapter;
 
     sequencerecycleradapter sequence_recyclerAdapter;
     ArrayList<sequence_item> sequence_items = new ArrayList<>();
     sequence_item sequence_item;
 
-    TextView txttv;
-    ImageView txtiv;
-//    ImageView txtiv2;
+//    TextView txttv;
+//    ImageView txtiv;
 
     static int Pos = 0;
 
     String create_url = "http://15.165.241.115/db/createcont.php";
-    ArrayList<createContItem> createContItems = new ArrayList<>();
-    createContItem createContItem;
-
-    ImageView imageViewA, imageViewB, imageViewC, imageViewD;
-    Button buttonA;
-
 
     static String[] ingre_num_strings = new String[20];
     static String[] ingre_strings = new String[20];
@@ -94,13 +109,15 @@ public class createCont extends AppCompatActivity {
     static String[] season_we_strings = new String[20];
     static String[] sequence_nums_strings = new String[20];
     static String[] sequence_conts_strings = new String[20];
-    static BitmapDrawable[] sequence_imgs_bitmapdrawables = new BitmapDrawable[20];
+    static Bitmap[] sequence_imgs_bitmap = new Bitmap[20];
+    static Uri[] sequence_imgs_urls = new Uri[20];
 
 
     TextView svtx1, svtx2, svtx3, svtx4, svtx5, svtx6, svtx7, svtx8;
     ImageView sviv1;
 
     saveCont saveCont;
+    exsvcont exsvcont;
 
 
     static String[] result_ingre = new String[10];
@@ -112,6 +129,48 @@ public class createCont extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createcont);
 
+//        saveContItem = new saveContItem();
+
+        editText1 = findViewById(R.id.title);
+        imageView1 = findViewById(R.id.ibimg);
+        editText2 = findViewById(R.id.cont);
+
+        editText1.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                title = s.toString();
+                title_pass = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                title = s.toString();
+                title_pass = true;
+            }
+        });
+        editText2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                cont = s.toString();
+                cont_pass = true;
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                cont = s.toString();
+                cont_pass = true;
+            }
+        });
 
         svtx1 = findViewById(R.id.sv_ingre_num);
         svtx2 = findViewById(R.id.sv_ingre);
@@ -126,12 +185,12 @@ public class createCont extends AppCompatActivity {
         resultingre = findViewById(R.id.resultingre);
 
         textView1 = findViewById(R.id.tv1);
-        textView2 = findViewById(R.id.exedtx);
+//        textView2 = findViewById(R.id.exedtx);
         imageView1 = findViewById(R.id.ibimg);
-        imageView2 = findViewById(R.id.testimg);
+//        imageView2 = findViewById(R.id.testimg);
 
-        txttv = findViewById(R.id.txtimg_tx);
-        txtiv = findViewById(R.id.txtimg_iv);
+//        txttv = findViewById(R.id.txtimg_tx);
+//        txtiv = findViewById(R.id.txtimg_iv);
 
         ingre_listAdapter = new ingrelistAdapter();
         season_listAdapter = new seasonlistAdapter();
@@ -178,7 +237,6 @@ public class createCont extends AppCompatActivity {
 
     }
 
-    public ArrayList<sequence_item> tt = new ArrayList<>();
     public void initadp() {
         sequence_recyclerAdapter = new sequencerecycleradapter(sequence_items);
         recyclerView1.setAdapter(sequence_recyclerAdapter);
@@ -186,12 +244,12 @@ public class createCont extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Toast.makeText(createCont.this, "아이템 터치", Toast.LENGTH_LONG).show();
-                txttv.setText(String.valueOf(position));
+//                txttv.setText(String.valueOf(position));
 
                 Intent intent = new Intent();
                 Pos = position;
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setAction(Intent.ACTION_PICK);
                 startActivityForResult(intent, 2);
 
             }
@@ -206,7 +264,6 @@ public class createCont extends AppCompatActivity {
 
         for (int i = 0; i < count; i++) {
             if (ingre_listAdapter.geted1(i) == null) {
-                textView2.setText("값이 없다");
             } else {
                 if ((ingre_listAdapter.geted1(i).getName() == null) && (ingre_listAdapter.geted1(i).getWeight() == null)) {
                     ingre_list.clear();
@@ -227,9 +284,9 @@ public class createCont extends AppCompatActivity {
             }
         }
 
-        for (int i = 0; i < ingre_list.size(); i++) {
-            textView2.append(ingre_list.get(i));
-        }
+//        for (int i = 0; i < ingre_list.size(); i++) {
+//            textView2.append(ingre_list.get(i));
+//        }
 
 
     }
@@ -238,12 +295,10 @@ public class createCont extends AppCompatActivity {
         season_list.clear();
         season_we_list.clear();
 
-//        int count = ingre_listAdapter.getCount();
         int count = season_listAdapter.getCount();
 
         for (int i = 0; i < count; i++) {
             if (season_listAdapter.geted1(i) == null) {
-                textView2.setText("값이 없다");
             } else {
                 if ((season_listAdapter.geted1(i).getName() == null) && (season_listAdapter.geted1(i).getWeight() == null)) {
                     season_list.clear();
@@ -266,9 +321,9 @@ public class createCont extends AppCompatActivity {
             }
         }
 
-        for (int i = 0; i < season_list.size(); i++) {
-            textView2.append(season_list.get(i));
-        }
+//        for (int i = 0; i < season_list.size(); i++) {
+//            textView2.append(season_list.get(i));
+//        }
 
 
     }
@@ -307,32 +362,55 @@ public class createCont extends AppCompatActivity {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
             Bitmap bitmap = null;
+
             try {
                 bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
+
+                cont_img_Uri = uri;
+//                Toast.makeText(createCont.this, uri.toString(), Toast.LENGTH_LONG).show();
             } catch (Exception e) {
             }
 
             BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
             imageView1.setBackground(bitmapDrawable);
 
-            imageView2.setImageBitmap(bitmap);
+            cont_img_absol_uri = getpath(uri);
+//            cont_img_absol_uri = createCopyAndReturnRealPath(createCont.this, uri);
+            Toast.makeText(createCont.this, String.valueOf(cont_img_absol_uri), Toast.LENGTH_LONG).show();
+
+            cont_img = bitmap;
+            cont_img_pass = true;
+
+//            imageView2.setImageBitmap(bitmap);
         }
 
         if (requestCode == 2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imgpass = true;
 
             Uri uri = data.getData();
             Bitmap bitmap = null;
             try {
                 bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
+                sequence_items.get(Pos).setSequence_img_uri(uri);
             } catch (Exception e) {
             }
 
-            BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
-
-            sequence_items.get(Pos).setSequence_img(bitmapDrawable);
+            sequence_items.get(Pos).setSequence_img(bitmap);
             sequence_recyclerAdapter.notifyDataSetChanged();
 
         }
+    }
+
+    public String getpath(Uri uri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, proj, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            res = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
+            cursor.close();
+        }
+        return res;
     }
 
     public void addingreList(View view) {
@@ -360,10 +438,10 @@ public class createCont extends AppCompatActivity {
     }
 
     public void addsequenceList(View view) {
+        imgpass = false;
         season_pass = false;
 
         if (sequence_items.size() >= 20) {
-//            Toast.makeText(createCont.this, "그만", Toast.LENGTH_LONG).show();
         } else {
             sequence_item = new sequence_item();
 
@@ -377,38 +455,38 @@ public class createCont extends AppCompatActivity {
     public void getimg(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_PICK);
 
         startActivityForResult(intent, 1);
     }
 
-    public void kkzz(View view) {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-
-        startActivityForResult(intent, 2);
-    }
-
-    public void testtxtimg(View view) {
-        String[] strings = sequence_recyclerAdapter.getEdit_Arr();
-        String result = null;
-        if (strings == null) {
-        } else {
-            for (int i = 0; i < strings.length; i++) {
-                if (strings[i] != null) {
-                    if (i == 0) {
-                        result = strings[i];
-                    } else {
-                        result += (strings[i]);
-                    }
-                }
-            }
-        }
-        if (result != null) {
-            txttv.setText(result);
-        }
-    }
+//    public void kkzz(View view) {
+//        Intent intent = new Intent();
+//        intent.setType("image/*");
+//        intent.setAction(Intent.ACTION_GET_CONTENT);
+//
+//        startActivityForResult(intent, 2);
+//    }
+//
+//    public void testtxtimg(View view) {
+//        String[] strings = sequence_recyclerAdapter.getEdit_Arr();
+//        String result = null;
+//        if (strings == null) {
+//        } else {
+//            for (int i = 0; i < strings.length; i++) {
+//                if (strings[i] != null) {
+//                    if (i == 0) {
+//                        result = strings[i];
+//                    } else {
+//                        result += (strings[i]);
+//                    }
+//                }
+//            }
+//        }
+//        if (result != null) {
+////            txttv.setText(result);
+//        }
+//    }
 
     public void getIngre() {
         ingre_pass = false;
@@ -526,14 +604,20 @@ public class createCont extends AppCompatActivity {
                     sequence_img.clear();
                     Toast.makeText(createCont.this, "사진을 등록하세요9", Toast.LENGTH_LONG).show();
                 } else {
-                    sequence_num.add(Integer.parseInt(sequence_recyclerAdapter.geted1(i).getSequence_num()));
-                    sequence_cont.add(sequence_recyclerAdapter.geted1(i).getSequence_cont());
-                    sequence_img.add(sequence_recyclerAdapter.geted1(i).getSequence_img());
+                    if (imgpass == true) {
+                        sequence_num.add(Integer.parseInt(sequence_recyclerAdapter.geted1(i).getSequence_num()));
+                        sequence_cont.add(sequence_recyclerAdapter.geted1(i).getSequence_cont());
+                        sequence_img.add(sequence_recyclerAdapter.geted1(i).getSequence_img());
+                        sequence_img_uri.add(sequence_recyclerAdapter.geted1(i).getSequence_img_uri());
 
-                    sequence_nums_strings[i] = String.valueOf(i + 1);
-                    sequence_conts_strings[i] = sequence_recyclerAdapter.geted1(i).getSequence_cont();
-                    sequence_imgs_bitmapdrawables[i] = sequence_recyclerAdapter.geted1(i).getSequence_img();
-                    sequence_pass = true;
+                        sequence_nums_strings[i] = String.valueOf(i + 1);
+                        sequence_conts_strings[i] = sequence_recyclerAdapter.geted1(i).getSequence_cont();
+                        sequence_imgs_bitmap[i] = sequence_recyclerAdapter.geted1(i).getSequence_img();
+                        sequence_imgs_urls[i] = sequence_recyclerAdapter.geted1(i).getSequence_img_uri();
+                        sequence_pass = true;
+                    }else{
+                        Toast.makeText(createCont.this, "사진을 등록하세요", Toast.LENGTH_LONG).show();
+                    }
                 }
             }
         }
@@ -553,85 +637,102 @@ public class createCont extends AppCompatActivity {
         sequence_cont.clear();
         sequence_img.clear();
 
+//        title = editText1.getText().toString();
+        cont = editText2.getText().toString();
+
         getIngre();
 
         getSeason();
 
         getSequence();
 
-        if ((ingre_pass == true) && (season_pass == true) && sequence_pass == true) {
-            svtx1.setText(ingre_num_strings[ingre_num.size()-1]);
-            svtx2.setText(ingre_strings[ingre_list.size()-1]);
-            svtx3.setText(ingre_we_strings[ingre_we_list.size()-1]);
+        saveContItem = new saveContItem();
+        saveContItem.setTitle(title);
+        saveContItem.setCont(cont);
+        saveContItem.setCont_img(cont_img);
+        saveContItem.setCont_img_uri(cont_img_Uri);
+        saveContItem.setIngre_num(ingre_num_strings);
+        saveContItem.setIngre(ingre_strings);
+        saveContItem.setIngre_we(ingre_we_strings);
+        saveContItem.setSeason_num(season_num_strings);
+        saveContItem.setSeason(season_strings);
+        saveContItem.setSeason_we(season_we_strings);
+        saveContItem.setSequence_num(sequence_nums_strings);
+        saveContItem.setSequence(sequence_conts_strings);
+        saveContItem.setSequence_img(sequence_imgs_bitmap);
+        saveContItem.setSequence_img_uri(sequence_imgs_urls);
 
-            svtx4.setText(season_num_strings[season_num.size()-1]);
-            svtx5.setText(season_strings[season_list.size()-1]);
-            svtx6.setText(season_we_strings[season_we_list.size()-1]);
+        if ((ingre_pass == true) && (season_pass == true) && (sequence_pass == true) && (title_pass == true) && (cont_pass == true) && (cont_img_pass == true)) {
+            svtx1.setText(ingre_num_strings[ingre_num.size() - 1]);
+            svtx2.setText(ingre_strings[ingre_list.size() - 1]);
+            svtx3.setText(ingre_we_strings[ingre_we_list.size() - 1]);
 
-            svtx7.setText(sequence_nums_strings[sequence_num.size()-1]);
-            svtx8.setText(sequence_conts_strings[sequence_cont.size()-1]);
-            sviv1.setBackground(sequence_imgs_bitmapdrawables[sequence_img.size()-1]);
-        }else{
-            Toast.makeText(createCont.this, "안된다", Toast.LENGTH_LONG).show();
+            svtx4.setText(season_num_strings[season_num.size() - 1]);
+            svtx5.setText(season_strings[season_list.size() - 1]);
+            svtx6.setText(season_we_strings[season_we_list.size() - 1]);
+
+            svtx7.setText(sequence_nums_strings[sequence_num.size() - 1]);
+            svtx8.setText(sequence_conts_strings[sequence_cont.size() - 1]);
+//            sviv1.setImageBitmap(sequence_imgs_bitmap[sequence_img.size() - 1]);
+            Bitmap[] bb = saveContItem.getSequence_img();
+            sviv1.setImageBitmap(bb[0]);
+        } else {
         }
 
+        saveCont = new saveCont();
+        saveCont.execute(saveContItem);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                saveCont = new saveCont();
-                saveCont.execute(ingre_num_strings, ingre_strings, ingre_we_strings, season_num_strings, season_strings, season_we_strings);
-            }
-        }, 1500);
+//        Toast.makeText(createCont.this, saveContItem.getTitle(), Toast.LENGTH_LONG).show();
+//
+//
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                saveCont = new saveCont();
+//                saveCont.execute(ingre_num_strings, ingre_strings, ingre_we_strings, season_num_strings, season_strings, season_we_strings);
+//            }
+//        }, 1500);
 
 
     }
 
-
-    public class saveCont extends AsyncTask<String[], Void, String> {
-
+    public class saveCont extends AsyncTask<saveContItem, Void, exsvcont> {
         @Override
-        protected String doInBackground(String[]... strings) {
-            String[] ingre_num = strings[0];
-            String[] ingre = strings[1];
-            String[] ingre_we = strings[2];
-
-            String[] season_num = strings[3];
-            String[] season = strings[4];
-            String[] season_we = strings[5];
-
-            return getS(ingre_num, ingre, ingre_we, season_num, season, season_we);
+        protected exsvcont doInBackground(saveContItem... saveContItems) {
+            return getS(saveContItems[0]);
         }
-
         protected void onPostExecute(String result) {
-            getJ(result);
+            Toast.makeText(createCont.this, result, Toast.LENGTH_LONG).show();
         }
 
-        private String getS(String[]... strings){
-            String[] ingre_num = strings[0];
-            String[] ingre = strings[1];
-            String[] ingre_we = strings[2];
+        private exsvcont getS(saveContItem saveContItem) {
+            exsvcont = new exsvcont();
 
-            String[] season_num = strings[3];
-            String[] season = strings[4];
-            String[] season_we = strings[5];
+            String title = saveContItem.getTitle();
+            String cont = saveContItem.getCont();
+            Bitmap cont_img = saveContItem.getCont_img();
+            Uri cont_img_uri = saveContItem.getCont_img_uri();
 
-            HttpURLConnection conn = null;
+            String[] ingre_num = saveContItem.getIngre_num();
+            String[] ingre = saveContItem.getIngre();
+            String[] ingre_we = saveContItem.getIngre_we();
+
+            String[] season_num = saveContItem.getSeason_num();
+            String[] season = saveContItem.getSeason();
+            String[] season_we = saveContItem.getSeason_we();
+
+            String[] sequence_num = saveContItem.getSequence_num();
+            String[] sequence = saveContItem.getSequence();
+            Bitmap[] sequence_img = saveContItem.getSequence_img();
+            Uri[] sequence_img_uri = saveContItem.getSequence_img_uri();
 
             String param = "";
 
-            for (int i = 0; i < ingre_num.length; i++) {
-                if (ingre_num[i] != null) {
-                    param += "&ingre_num[]=" + ingre_num[i];
-                }
-            }
-            for (int i = 0; i < ingre.length; i++) {
-                if (ingre[i] != null) {
-                    param += "&ingre[]=" + ingre[i];
-                }
-            }
+//            param += "title=" + title + " &cont=" + cont;
+            param += "title=" + title + " &cont=" + cont + " &cont_img=" + cont_img;
 
+            HttpURLConnection conn = null;
             try {
                 URL url = new URL(create_url);
                 conn = (HttpURLConnection) url.openConnection();
@@ -639,6 +740,8 @@ public class createCont extends AppCompatActivity {
                 conn.setReadTimeout(5000);
                 conn.setConnectTimeout(5000);
                 conn.setRequestMethod("POST");
+                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data; doundary="+"****");
                 conn.connect();
 
                 OutputStream outputStream = conn.getOutputStream();
@@ -667,37 +770,127 @@ public class createCont extends AppCompatActivity {
 
                 bufferedReader.close();
 
-                return sb.toString();
+//                return sb.toString();
+                return exsvcont;
 
             } catch (Exception e) {
                 return null;
             }
-        }
 
-        private void getJ(String page) {
-
-            try {
-                JSONObject json = new JSONObject(page);
-
-                JSONArray jArr = json.getJSONArray("result");
-
-                JSONObject result_json;
-
-                for (int i = 0; i < jArr.length(); i++) {
-
-                    result_json = jArr.getJSONObject(i);
-
-                    result_ingre[i] = result_json.getString("ingre");
-
-                    resultingre.append(result_json.getString("ingre_num"));
-                    resultingre.append(result_json.getString("ingre"));
-
-                }
-
-            } catch (Exception e) {
-
-            }
         }
     }
+
+
+
+//    public class saveCont extends AsyncTask<String[], Void, String> {
+//
+//        @Override
+//        protected String doInBackground(String[]... strings) {
+//            String[] ingre_num = strings[0];
+//            String[] ingre = strings[1];
+//            String[] ingre_we = strings[2];
+//
+//            String[] season_num = strings[3];
+//            String[] season = strings[4];
+//            String[] season_we = strings[5];
+//
+//            return getS(ingre_num, ingre, ingre_we, season_num, season, season_we);
+//        }
+//
+//        protected void onPostExecute(String result) {
+//            getJ(result);
+//        }
+//
+//        private String getS(String[]... strings){
+//            String[] ingre_num = strings[0];
+//            String[] ingre = strings[1];
+//            String[] ingre_we = strings[2];
+//
+//            String[] season_num = strings[3];
+//            String[] season = strings[4];
+//            String[] season_we = strings[5];
+//
+//            HttpURLConnection conn = null;
+//
+//            String param = "";
+//
+//            for (int i = 0; i < ingre_num.length; i++) {
+//                if (ingre_num[i] != null) {
+//                    param += "&ingre_num[]=" + ingre_num[i];
+//                }
+//            }
+//            for (int i = 0; i < ingre.length; i++) {
+//                if (ingre[i] != null) {
+//                    param += "&ingre[]=" + ingre[i];
+//                }
+//            }
+//
+//            try {
+//                URL url = new URL(create_url);
+//                conn = (HttpURLConnection) url.openConnection();
+//
+//                conn.setReadTimeout(5000);
+//                conn.setConnectTimeout(5000);
+//                conn.setRequestMethod("POST");
+//                conn.connect();
+//
+//                OutputStream outputStream = conn.getOutputStream();
+//                outputStream.write(param.getBytes("UTF-8"));
+//                outputStream.flush();
+//                outputStream.close();
+//
+//                int response = conn.getResponseCode();
+//
+//                InputStream iStream;
+//                if (response == HttpURLConnection.HTTP_OK) {
+//                    iStream = conn.getInputStream();
+//                } else {
+//                    iStream = conn.getErrorStream();
+//                }
+//
+//                InputStreamReader inputStreamReader = new InputStreamReader(iStream, "UTF-8");
+//                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+//
+//                StringBuilder sb = new StringBuilder();
+//                String line = "";
+//
+//                while ((line = bufferedReader.readLine()) != null) {
+//                    sb.append(line);
+//                }
+//
+//                bufferedReader.close();
+//
+//                return sb.toString();
+//
+//            } catch (Exception e) {
+//                return null;
+//            }
+//        }
+//
+//        private void getJ(String page) {
+//
+//            try {
+//                JSONObject json = new JSONObject(page);
+//
+//                JSONArray jArr = json.getJSONArray("result");
+//
+//                JSONObject result_json;
+//
+//                for (int i = 0; i < jArr.length(); i++) {
+//
+//                    result_json = jArr.getJSONObject(i);
+//
+//                    result_ingre[i] = result_json.getString("ingre");
+//
+//                    resultingre.append(result_json.getString("ingre_num"));
+//                    resultingre.append(result_json.getString("ingre"));
+//
+//                }
+//
+//            } catch (Exception e) {
+//
+//            }
+//        }
+//    }
 
 }

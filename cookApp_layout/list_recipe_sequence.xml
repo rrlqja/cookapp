@@ -25,6 +25,7 @@
         </EditText>
         <ImageView
             android:background="@drawable/plus"
+            android:scaleType="centerCrop"
             android:id="@+id/recipe_sequence_img"
             android:layout_weight="3"
             android:layout_width="0dp"

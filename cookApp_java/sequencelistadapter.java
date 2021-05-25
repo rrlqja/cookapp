@@ -98,7 +98,8 @@ public class sequencelistadapter extends BaseAdapter {
             }
         });
 
-        imageView1.setBackground(listViewItemList.get(position).getSequence_img());
+//        imageView1.setBackground(listViewItemList.get(position).getSequence_img());
+        imageView1.setImageBitmap(listViewItemList.get(position).getSequence_img());
 
         return convertView;
     }

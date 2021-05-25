@@ -345,7 +345,6 @@ public class home extends AppCompatActivity {
     }
 
     public void createcont(View view) {
-        Toast.makeText(getApplicationContext(), "터치터치", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(home.this, createCont.class);
         intent.putExtra("userid", userID);
         startActivity(intent);

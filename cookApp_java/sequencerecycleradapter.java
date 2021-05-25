@@ -2,6 +2,7 @@ package com.example.cookapp1;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -23,25 +24,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    static int sequence_num = 0;
-
     ArrayList<sequence_item> edit_Arr=new ArrayList<>();
     sequence_item sequence_item;
-
-//    ArrayList<BitmapDrawable> bitmapDrawables = new ArrayList<>();
 
     private final int VIEW_TYPE_ITEM=0;
     private final int VIEW_TYPE_LOADING = 1;
 
     static String[] edHint = {" 예) 고기를 먹기 좋은 크기로 자릅니다.", " 예) 채소를 깨끗히 세척합니다.", " 예) 고기와 채소를 볶아줍니다."};
-    static int edHint_point = 0;
-
-
 
     String[] strings = new String[20];
-    BitmapDrawable[] drawables = new BitmapDrawable[20];
-
-
 
     public interface OnItemClickListener{
         void onItemClick(View v, int position);
@@ -54,7 +45,6 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
     public ArrayList<sequence_item> mItemList;
     public sequencerecycleradapter(ArrayList<sequence_item> mItemList) {
         this.mItemList = mItemList;
-//        this.bitmapDrawables = bitmapDrawables;
     }
 
     @NonNull
@@ -98,18 +88,6 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
             matrix1.postScale(1.0f, 1.0f);
             imageView1.setImageMatrix(matrix1);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int pos = getAdapterPosition();
-//                    if (pos != RecyclerView.NO_POSITION) {
-//                        if (mListener != null) {
-//                            mListener.onItemClick(v, pos);
-//                        }
-//                    }
-//                }
-//            });
-
             imageView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -117,39 +95,23 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
                     if (pos != RecyclerView.NO_POSITION) {
                         if (mListener != null) {
                             mListener.onItemClick(v, pos);
+                            imageView1.setBackground(null);
 
                         }
                     }
                 }
             });
-
-//            textView1.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int pos = getAdapterPosition();
-//                    if (pos != RecyclerView.NO_POSITION) {
-//                        if (mListener != null) {
-//                            mListener.onItemClick(v, pos);
-//                        }
-//                    }
-//                }
-//            });
         }
     }
 
     private void populateItemRows(itemViewHolder viewHolder, int position) {
 
-        drawables[position] = mItemList.get(position).getSequence_img();
-
         mItemList.get(position).setSequence_num(String.valueOf(position+1));
         mItemList.get(position).setSequence_img(mItemList.get(position).getSequence_img());
-//        if (bitmapDrawables.get(position) != null) {
-//            mItemList.get(position).setSequence_img(bitmapDrawables.get(position));
-//        }
 
         String num = mItemList.get(position).getSequence_num();
         String cont = mItemList.get(position).getSequence_cont();
-        BitmapDrawable img = mItemList.get(position).getSequence_img();
+        Bitmap img = mItemList.get(position).getSequence_img();
 
         viewHolder.editText1.setHint(edHint[position % 3]);
 
@@ -163,55 +125,34 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                edit_Arr.add(position, sequence_item);
-//                edit_Arr.get(viewHolder.getAdapterPosition()).setSequence_cont(s.toString());
                 mItemList.get(position).setSequence_cont(s.toString());
                 strings[position] = s.toString();
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-//                edit_Arr.add(position, sequence_item);
-//                edit_Arr.get(viewHolder.getAdapterPosition()).setSequence_cont(s.toString());
                 mItemList.get(position).setSequence_cont(s.toString());
                 strings[position] = s.toString();
             }
         });
 
         viewHolder.textView1.setText(num);
-        viewHolder.imageView1.setBackground(img);
+
+        Matrix matrix1 = new Matrix();
+        matrix1.postScale(1.0f, 1.0f);
+        viewHolder.imageView1.setImageMatrix(matrix1);
+
+        viewHolder.imageView1.setImageBitmap(img);
 
     }
 
     public String[] getEdit_Arr() {
-//        String[] strings = null;
         for (int i = 0; i < edit_Arr.size(); i++) {
             if (strings[i] != null) {
                 strings[i] = edit_Arr.get(i).getSequence_cont();
             }
         }
         return strings;
-    }
-
-    public BitmapDrawable[] getBit() {
-        BitmapDrawable[] bitmapDrawables = new BitmapDrawable[20];
-
-//        for (int i = 0; i < mItemList.size(); i++) {
-//            bitmapDrawables[i] = mItemList.get(i).getSequence_img();
-//        }
-        for (int i = 0; i < drawables.length; i++) {
-            bitmapDrawables[i] = drawables[i];
-        }
-
-        return bitmapDrawables;
-    }
-
-    public String getcont(int a) {
-        return mItemList.get(a).getSequence_cont();
-    }
-
-    public void setBit(int position, BitmapDrawable bitmapDrawable) {
-        mItemList.get(position).setSequence_img(bitmapDrawable);
     }
 
     public sequence_item geted1(int i) {
