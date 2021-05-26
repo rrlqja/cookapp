@@ -14,6 +14,15 @@ public class sequence_item {
     //    private BitmapDrawable sequence_img;
     private Bitmap sequence_img;
     private Uri sequence_img_uri;
+    private String sequence_img_absolute_uri;
+
+    public String getSequence_img_absolute_uri() {
+        return sequence_img_absolute_uri;
+    }
+
+    public void setSequence_img_absolute_uri(String sequence_img_absolute_uri) {
+        this.sequence_img_absolute_uri = sequence_img_absolute_uri;
+    }
 
     public Uri getSequence_img_uri() {
         return sequence_img_uri;

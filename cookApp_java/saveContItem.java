@@ -8,6 +8,7 @@ public class saveContItem {
     private String cont;
     private Bitmap cont_img;
     private Uri cont_img_uri;
+    private String cont_img_absolute_uri;
 
     private String[] ingre_num;
     private String[] ingre;
@@ -21,6 +22,23 @@ public class saveContItem {
     private String[] sequence;
     private Bitmap[] sequence_img;
     private Uri[] sequence_img_uri;
+    private String[] sequence_img_absolute_uri;
+
+    public String getCont_img_absolute_uri() {
+        return cont_img_absolute_uri;
+    }
+
+    public void setCont_img_absolute_uri(String cont_img_absolute_uri) {
+        this.cont_img_absolute_uri = cont_img_absolute_uri;
+    }
+
+    public String[] getSequence_img_absolute_uri() {
+        return sequence_img_absolute_uri;
+    }
+
+    public void setSequence_img_absolute_uri(String[] sequence_img_absolute_uri) {
+        this.sequence_img_absolute_uri = sequence_img_absolute_uri;
+    }
 
     public Uri getCont_img_uri() {
         return cont_img_uri;

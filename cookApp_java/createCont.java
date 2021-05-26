@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.ParcelFileDescriptor;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,7 +30,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -111,6 +114,7 @@ public class createCont extends AppCompatActivity {
     static String[] sequence_conts_strings = new String[20];
     static Bitmap[] sequence_imgs_bitmap = new Bitmap[20];
     static Uri[] sequence_imgs_urls = new Uri[20];
+    static String[] sequence_imgs_absolute_urls = new String[20];
 
 
     TextView svtx1, svtx2, svtx3, svtx4, svtx5, svtx6, svtx7, svtx8;
@@ -256,78 +260,6 @@ public class createCont extends AppCompatActivity {
         });
     }
 
-    public void show_ingre_testlist(View view) {
-        ingre_list.clear();
-        ingre_we_list.clear();
-
-        int count = ingre_listAdapter.getCount();
-
-        for (int i = 0; i < count; i++) {
-            if (ingre_listAdapter.geted1(i) == null) {
-            } else {
-                if ((ingre_listAdapter.geted1(i).getName() == null) && (ingre_listAdapter.geted1(i).getWeight() == null)) {
-                    ingre_list.clear();
-                    ingre_we_list.clear();
-                    Toast.makeText(createCont.this, "재료를 입력하세요1", Toast.LENGTH_LONG).show();
-                } else if ((ingre_listAdapter.geted1(i).getName() == null) && (ingre_listAdapter.geted1(i).getWeight()) != null) {
-                    ingre_list.clear();
-                    ingre_we_list.clear();
-                    Toast.makeText(createCont.this, "재료를 입력하세요2", Toast.LENGTH_LONG).show();
-                } else if ((ingre_listAdapter.geted1(i).getName() != null) && (ingre_listAdapter.geted1(i).getWeight() == null)) {
-                    ingre_list.clear();
-                    ingre_we_list.clear();
-                    Toast.makeText(createCont.this, "용량을 입력하세요3", Toast.LENGTH_LONG).show();
-                } else {
-                    ingre_list.add(ingre_listAdapter.geted1(i).getName());
-                    ingre_we_list.add(ingre_listAdapter.geted1(i).getWeight());
-                }
-            }
-        }
-
-//        for (int i = 0; i < ingre_list.size(); i++) {
-//            textView2.append(ingre_list.get(i));
-//        }
-
-
-    }
-
-    public void show_season_testlist(View view) {
-        season_list.clear();
-        season_we_list.clear();
-
-        int count = season_listAdapter.getCount();
-
-        for (int i = 0; i < count; i++) {
-            if (season_listAdapter.geted1(i) == null) {
-            } else {
-                if ((season_listAdapter.geted1(i).getName() == null) && (season_listAdapter.geted1(i).getWeight() == null)) {
-                    season_list.clear();
-                    season_we_list.clear();
-                    Toast.makeText(createCont.this, "재료를 입력하세요1", Toast.LENGTH_LONG).show();
-                } else if ((season_listAdapter.geted1(i).getName() == null) && (season_listAdapter.geted1(i).getWeight()) != null) {
-                    season_list.clear();
-                    season_we_list.clear();
-                    Toast.makeText(createCont.this, "재료를 입력하세요2", Toast.LENGTH_LONG).show();
-                } else if ((season_listAdapter.geted1(i).getName() != null) && (season_listAdapter.geted1(i).getWeight() == null)) {
-                    season_list.clear();
-                    season_we_list.clear();
-                    Toast.makeText(createCont.this, "용량을 입력하세요3", Toast.LENGTH_LONG).show();
-                } else {
-                    season_list.add(season_listAdapter.geted1(i).getName());
-                    season_we_list.add(season_listAdapter.geted1(i).getWeight());
-
-
-                }
-            }
-        }
-
-//        for (int i = 0; i < season_list.size(); i++) {
-//            textView2.append(season_list.get(i));
-//        }
-
-
-    }
-
     private void ingre_listheight() {
 
         int totalheight = 0;
@@ -375,8 +307,9 @@ public class createCont extends AppCompatActivity {
             imageView1.setBackground(bitmapDrawable);
 
             cont_img_absol_uri = getpath(uri);
-//            cont_img_absol_uri = createCopyAndReturnRealPath(createCont.this, uri);
-            Toast.makeText(createCont.this, String.valueOf(cont_img_absol_uri), Toast.LENGTH_LONG).show();
+//            cont_img_absol_uri = getpth(this, uri);
+            Toast.makeText(createCont.this, cont_img_absol_uri, Toast.LENGTH_LONG).show();
+//            new AlertDialog.Builder(this).setMessage(uri.toString()+"\nmm\n"+cont_img_absol_uri).create().show();
 
             cont_img = bitmap;
             cont_img_pass = true;
@@ -392,6 +325,7 @@ public class createCont extends AppCompatActivity {
             try {
                 bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
                 sequence_items.get(Pos).setSequence_img_uri(uri);
+                sequence_items.get(Pos).setSequence_img_absolute_uri(getpath(uri));
             } catch (Exception e) {
             }
 
@@ -411,6 +345,35 @@ public class createCont extends AppCompatActivity {
             cursor.close();
         }
         return res;
+    }
+
+    public String getpth(Context ctx, Uri uri) {
+        final ContentResolver contentResolver = ctx.getContentResolver();
+
+        if (contentResolver == null) {
+            return null;
+        }
+
+        String filepath = ctx.getApplicationInfo().dataDir + File.separator + System.currentTimeMillis();
+
+        File file = new File(filepath);
+        try {
+            InputStream inputStream = contentResolver.openInputStream(uri);
+            if (inputStream == null) {
+                return null;
+            }
+            OutputStream outputStream = new FileOutputStream(file);
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = inputStream.read(buf)) > 0) {
+                outputStream.write(buf, 0, len);
+                outputStream.close();
+                inputStream.close();
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return file.getAbsolutePath();
     }
 
     public void addingreList(View view) {
@@ -459,34 +422,6 @@ public class createCont extends AppCompatActivity {
 
         startActivityForResult(intent, 1);
     }
-
-//    public void kkzz(View view) {
-//        Intent intent = new Intent();
-//        intent.setType("image/*");
-//        intent.setAction(Intent.ACTION_GET_CONTENT);
-//
-//        startActivityForResult(intent, 2);
-//    }
-//
-//    public void testtxtimg(View view) {
-//        String[] strings = sequence_recyclerAdapter.getEdit_Arr();
-//        String result = null;
-//        if (strings == null) {
-//        } else {
-//            for (int i = 0; i < strings.length; i++) {
-//                if (strings[i] != null) {
-//                    if (i == 0) {
-//                        result = strings[i];
-//                    } else {
-//                        result += (strings[i]);
-//                    }
-//                }
-//            }
-//        }
-//        if (result != null) {
-////            txttv.setText(result);
-//        }
-//    }
 
     public void getIngre() {
         ingre_pass = false;
@@ -614,6 +549,7 @@ public class createCont extends AppCompatActivity {
                         sequence_conts_strings[i] = sequence_recyclerAdapter.geted1(i).getSequence_cont();
                         sequence_imgs_bitmap[i] = sequence_recyclerAdapter.geted1(i).getSequence_img();
                         sequence_imgs_urls[i] = sequence_recyclerAdapter.geted1(i).getSequence_img_uri();
+                        sequence_imgs_absolute_urls[i] = sequence_recyclerAdapter.geted1(i).getSequence_img_absolute_uri();
                         sequence_pass = true;
                     }else{
                         Toast.makeText(createCont.this, "사진을 등록하세요", Toast.LENGTH_LONG).show();
@@ -651,6 +587,7 @@ public class createCont extends AppCompatActivity {
         saveContItem.setCont(cont);
         saveContItem.setCont_img(cont_img);
         saveContItem.setCont_img_uri(cont_img_Uri);
+        saveContItem.setCont_img_absolute_uri(cont_img_absol_uri);
         saveContItem.setIngre_num(ingre_num_strings);
         saveContItem.setIngre(ingre_strings);
         saveContItem.setIngre_we(ingre_we_strings);
@@ -661,6 +598,7 @@ public class createCont extends AppCompatActivity {
         saveContItem.setSequence(sequence_conts_strings);
         saveContItem.setSequence_img(sequence_imgs_bitmap);
         saveContItem.setSequence_img_uri(sequence_imgs_urls);
+        saveContItem.setSequence_img_absolute_uri(sequence_imgs_absolute_urls);
 
         if ((ingre_pass == true) && (season_pass == true) && (sequence_pass == true) && (title_pass == true) && (cont_pass == true) && (cont_img_pass == true)) {
             svtx1.setText(ingre_num_strings[ingre_num.size() - 1]);
@@ -678,6 +616,17 @@ public class createCont extends AppCompatActivity {
             sviv1.setImageBitmap(bb[0]);
         } else {
         }
+
+//        File file = new File(cont_img_absol_uri);
+//        System.out.println("file abso: "+file.getAbsolutePath());
+//        try {
+////            FileInputStream fileInputStream = new FileInputStream(file.getAbsolutePath());
+//            ParcelFileDescriptor r = createCont.this.getContentResolver().openFileDescriptor(cont_img_Uri, "r", null);
+//            FileInputStream fileInputStream = new FileInputStream(r.getFileDescriptor());
+//            Toast.makeText(createCont.this, "성공", Toast.LENGTH_LONG).show();
+//        } catch (Exception e) {
+//            Toast.makeText(createCont.this, e.toString(), Toast.LENGTH_LONG).show();
+//        }
 
         saveCont = new saveCont();
         saveCont.execute(saveContItem);
@@ -697,22 +646,24 @@ public class createCont extends AppCompatActivity {
 
     }
 
-    public class saveCont extends AsyncTask<saveContItem, Void, exsvcont> {
+    public class saveCont extends AsyncTask<saveContItem, Void, String> {
         @Override
-        protected exsvcont doInBackground(saveContItem... saveContItems) {
+        protected String doInBackground(saveContItem... saveContItems) {
             return getS(saveContItems[0]);
         }
         protected void onPostExecute(String result) {
             Toast.makeText(createCont.this, result, Toast.LENGTH_LONG).show();
         }
 
-        private exsvcont getS(saveContItem saveContItem) {
+        private String getS(saveContItem saveContItem) {
+            String boundary = "*****";
             exsvcont = new exsvcont();
 
             String title = saveContItem.getTitle();
             String cont = saveContItem.getCont();
             Bitmap cont_img = saveContItem.getCont_img();
             Uri cont_img_uri = saveContItem.getCont_img_uri();
+            String cont_img_absolute_uri = saveContItem.getCont_img_absolute_uri();
 
             String[] ingre_num = saveContItem.getIngre_num();
             String[] ingre = saveContItem.getIngre();
@@ -726,11 +677,12 @@ public class createCont extends AppCompatActivity {
             String[] sequence = saveContItem.getSequence();
             Bitmap[] sequence_img = saveContItem.getSequence_img();
             Uri[] sequence_img_uri = saveContItem.getSequence_img_uri();
+            String[] sequence_img_absolute_uri = saveContItem.getSequence_img_absolute_uri();
 
             String param = "";
 
 //            param += "title=" + title + " &cont=" + cont;
-            param += "title=" + title + " &cont=" + cont + " &cont_img=" + cont_img;
+//            param += "title=" + title + " &cont=" + cont + " &cont_img=" + cont_img;
 
             HttpURLConnection conn = null;
             try {
@@ -740,14 +692,42 @@ public class createCont extends AppCompatActivity {
                 conn.setReadTimeout(5000);
                 conn.setConnectTimeout(5000);
                 conn.setRequestMethod("POST");
-                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
-                conn.setRequestProperty("Content-Type", "multipart/form-data; doundary="+"****");
+//                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+                conn.setDoOutput(true);
                 conn.connect();
 
-                OutputStream outputStream = conn.getOutputStream();
-                outputStream.write(param.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
+                DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+                wr.writeBytes("\r\n--" + boundary + "\r\n");
+                wr.writeBytes("Content-Disposition: form-data; name=\"title\" \r\n\r\n" + title);
+
+                wr.writeBytes("\r\n--" + boundary + "\r\n");
+                wr.writeBytes("Content-Disposition: form-data; name=\"cont_img\"; filename=\"aaimg.jpg\" \r\n ");
+                wr.writeBytes("Content-Type: application/octet-stream\r\n\r\n");
+                ParcelFileDescriptor r = createCont.this.getContentResolver().openFileDescriptor(cont_img_uri, "r", null);
+                FileInputStream fileInputStream = new FileInputStream(r.getFileDescriptor());
+                int bytesAvailable = fileInputStream.available();
+                int maxBufferSize = 1024;
+                int bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                byte[] buffer = new byte[bufferSize];
+
+                int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                while (bytesRead > 0) {
+                    DataOutputStream dataWrite = new DataOutputStream(conn.getOutputStream());
+                    dataWrite.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                }
+                fileInputStream.close();
+
+                wr.writeBytes("\r\n--" + boundary + "--\r\n");
+                wr.flush();
+
+//                OutputStream outputStream = conn.getOutputStream();
+//                outputStream.write(param.getBytes("UTF-8"));
+//                outputStream.flush();
+//                outputStream.close();
 
                 int response = conn.getResponseCode();
 
@@ -770,8 +750,8 @@ public class createCont extends AppCompatActivity {
 
                 bufferedReader.close();
 
-//                return sb.toString();
-                return exsvcont;
+                return sb.toString();
+//                return exsvcont;
 
             } catch (Exception e) {
                 return null;
@@ -779,118 +759,5 @@ public class createCont extends AppCompatActivity {
 
         }
     }
-
-
-
-//    public class saveCont extends AsyncTask<String[], Void, String> {
-//
-//        @Override
-//        protected String doInBackground(String[]... strings) {
-//            String[] ingre_num = strings[0];
-//            String[] ingre = strings[1];
-//            String[] ingre_we = strings[2];
-//
-//            String[] season_num = strings[3];
-//            String[] season = strings[4];
-//            String[] season_we = strings[5];
-//
-//            return getS(ingre_num, ingre, ingre_we, season_num, season, season_we);
-//        }
-//
-//        protected void onPostExecute(String result) {
-//            getJ(result);
-//        }
-//
-//        private String getS(String[]... strings){
-//            String[] ingre_num = strings[0];
-//            String[] ingre = strings[1];
-//            String[] ingre_we = strings[2];
-//
-//            String[] season_num = strings[3];
-//            String[] season = strings[4];
-//            String[] season_we = strings[5];
-//
-//            HttpURLConnection conn = null;
-//
-//            String param = "";
-//
-//            for (int i = 0; i < ingre_num.length; i++) {
-//                if (ingre_num[i] != null) {
-//                    param += "&ingre_num[]=" + ingre_num[i];
-//                }
-//            }
-//            for (int i = 0; i < ingre.length; i++) {
-//                if (ingre[i] != null) {
-//                    param += "&ingre[]=" + ingre[i];
-//                }
-//            }
-//
-//            try {
-//                URL url = new URL(create_url);
-//                conn = (HttpURLConnection) url.openConnection();
-//
-//                conn.setReadTimeout(5000);
-//                conn.setConnectTimeout(5000);
-//                conn.setRequestMethod("POST");
-//                conn.connect();
-//
-//                OutputStream outputStream = conn.getOutputStream();
-//                outputStream.write(param.getBytes("UTF-8"));
-//                outputStream.flush();
-//                outputStream.close();
-//
-//                int response = conn.getResponseCode();
-//
-//                InputStream iStream;
-//                if (response == HttpURLConnection.HTTP_OK) {
-//                    iStream = conn.getInputStream();
-//                } else {
-//                    iStream = conn.getErrorStream();
-//                }
-//
-//                InputStreamReader inputStreamReader = new InputStreamReader(iStream, "UTF-8");
-//                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//
-//                StringBuilder sb = new StringBuilder();
-//                String line = "";
-//
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    sb.append(line);
-//                }
-//
-//                bufferedReader.close();
-//
-//                return sb.toString();
-//
-//            } catch (Exception e) {
-//                return null;
-//            }
-//        }
-//
-//        private void getJ(String page) {
-//
-//            try {
-//                JSONObject json = new JSONObject(page);
-//
-//                JSONArray jArr = json.getJSONArray("result");
-//
-//                JSONObject result_json;
-//
-//                for (int i = 0; i < jArr.length(); i++) {
-//
-//                    result_json = jArr.getJSONObject(i);
-//
-//                    result_ingre[i] = result_json.getString("ingre");
-//
-//                    resultingre.append(result_json.getString("ingre_num"));
-//                    resultingre.append(result_json.getString("ingre"));
-//
-//                }
-//
-//            } catch (Exception e) {
-//
-//            }
-//        }
-//    }
 
 }
