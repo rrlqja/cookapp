@@ -1,0 +1,21 @@
+<?php
+        include "connect.php";
+
+        $sql="select * from mImage";
+//      $sql="select * from mim";
+
+//      $sql="select * from mUser";
+        $result=mysqli_query($con, $sql);
+
+        $arr=mysqli_fetch_array($result);
+
+//      echo '<img src="data:image/jpeg;base64,'.base64_encode( $arr['Ima'] ).'"/>';
+        echo "<img src={$arr['Ima']} />";
+
+//      echo "<img src={$arr['im']} />";
+
+
+//      echo"시발";
+
+        mysqli_close($con);
+?>

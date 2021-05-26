@@ -1,0 +1,9 @@
+<?php
+        echo"파일 전송<hr>";
+?>
+<form enctype="multipart/form-data" action="imgsql.php" method="post">
+        <input type="text" name="In" placeholder="name"><br>
+        <input type="file" name="Im"><br>
+        <input type="text" name="con_num" placeholder="con_num"><br>
+        <input type="submit" value="전송">
+</form>

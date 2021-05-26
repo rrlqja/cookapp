@@ -1,0 +1,46 @@
+<html>
+        <head>
+                <meta charset="utf-8">
+        </head>
+</html>
+
+<?php
+        include "connect.php";
+
+        $upload_dir='../upload_files/';
+//      $upload_dir='http://15.165.241.115/ex/upload_files/';
+
+        $name=$_POST['In'];
+        $myimg=$upload_dir.basename($_FILES['Im']['name']);
+//      $myimg=$_FILES['Im']['name'];
+
+        $sql="insert into mImage(Iname, Ima) values('{$name}', '{$myimg}')";
+//      $sql="insert into mim values('{$myimg}')";
+
+        if(move_uploaded_file($_FILES['Im']['tmp_name'], $myimg)){
+                echo"성공<br>";
+                $result=mysqli_query($con, $sql);
+                if($result){
+                        echo" 디비 삽입 성공<br>";
+
+                        $s="select Ima from mImage";
+
+                        $sresult=mysqli_query($con, $s);
+                        $count=mysqli_num_fields($sresult);
+
+                        while($rows=mysqli_fetch_row($sresult)){
+                                echo"불러오기 성공<br>";
+                                for($a=0;$a<$count;$a++){
+                                        echo" <img src={$rows[$a]}> ";
+                                }
+                        }
+
+                }else{
+                        echo" 디비 삽입 실패";
+                }
+        }else{
+                echo"실패";
+        }
+
+        mysqli_close($con);
+?>

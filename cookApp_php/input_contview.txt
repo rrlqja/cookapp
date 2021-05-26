@@ -1,0 +1,4 @@
+<form method="post" action="contview.php">
+        <input type="text" name="con_num" placeholder="con_num"><br>
+        <input type="submit">
+</form>

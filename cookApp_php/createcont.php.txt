@@ -1,0 +1,68 @@
+<?php
+        include "connect.php";
+
+//      $con_num=$_POST['con_num'];
+//      $ingre_num=$_POST['ingre_num'];
+//      $ingre=$_POST['ingre'];
+//      $ingre_size=sizeof($ingre);
+
+        $get_cont_size_sql="select count(*) from mCon";
+        $get_cont_size_sql_result=mysqli_query($con, $get_cont_size_sql);
+        $cont_size=mysqli_fetch_array($get_cont_size_sql_result)[0]+1;
+
+        $title=$_POST['title'];
+        $cont=$_POST['cont'];
+
+        $now_time=date(YmdHis);
+
+        $upload_dir="../upload_files/";
+        $cont_img_realname=$_FILES['cont_img']['name'];
+        $nameArr=explode(".", $cont_img_realname);
+        $ext=$nameArr[sizeof($nameArr)-1];
+        $tmp_filename="cont_num_".$cont_size."_".$nameArr[0]."_".$now_time.".".strtolower($ext);
+        $upfile=$upload_dir.$tmp_filename;
+//      move_uploaded_file($_FILES['cont_img']['tmp_name'], $upfile));
+        if(move_uploaded_file($_FILES['cont_img']['tmp_name'], $upfile)){
+                echo"성공";
+        }else{
+                echo"실패";
+        }
+        echo $title;
+        echo $_FILES['cont_img']['name'];
+
+//      echo $tmp_filename."<br><br>";
+
+        $result_json=array();
+
+//      foreach($ingre as $ig){
+//              array_push($result_json, array('ingre'=>$ig));
+//      }
+//      foreach($ingre_num as $ig_num){
+//              array_push($result_json, array('ingre_num'=>$ig_num));
+//      }
+
+//      for($i=0;$i<20;$i++){
+//              array_push($result_json, array('ingre_num'=>$ingre_num[$i],'ingre'=>$ingre[$i]));
+//      }
+
+        $sql="select count(*) from mCon";
+        $result=mysqli_query($con, $sql);
+
+//      $count=mysqli_num_fields($result);
+        $count=mysqli_fetch_array($result);
+
+//      echo $count[0];
+
+//      for($i=0;$i<20;$i++){
+//              if(isset($ingre[$i])){
+//                      echo $ingre[$i]."<br><br>";
+//                      $sql="insert into cont_ingre values(
+//              }
+//      }
+
+//      echo date('Y-m-d H:i:s');
+
+        $json=json_encode(array('result'=>$result_json), JSON_UNESCAPED_UNICODE);
+        echo $json;
+
+?>

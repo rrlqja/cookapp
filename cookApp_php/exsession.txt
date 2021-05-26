@@ -1,0 +1,27 @@
+<?php
+        session_start();
+
+        $id=$_POST['id'];
+
+        $_SESSION['id']=$id;
+
+        $Sid=session_id();
+
+        echo"id:{$id}<br><hr>";
+        echo"Sid:{$Sid}<br><br>";
+
+//      $id=session_id();
+
+//      echo"<hr> 세션 id... [ <b> {$id} </b> ] <br>";
+//      echo"-------세션 사용중------<br>";
+
+//      echo" 세션에 등록된 내용<br><br>";
+
+//      echo"1. 차종:";
+//      echo $_SESSION['car'];
+
+//      unset($_SESSION['car']);
+
+//      echo"<br>2. 차종:";
+//      echo $_SESSION['car'];
+?>

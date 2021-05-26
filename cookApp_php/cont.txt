@@ -1,0 +1,16 @@
+<?php
+        include "connect.php";
+
+        $sql="select * from mCon";
+        $result=mysqli_query($con, $sql);
+
+        $result_json=array();
+
+        while($json_rows=mysqli_fetch_array($result)){
+                array_push($result_json, array('title'=>$json_rows[0], 'cont'=>$json_rows[1], 'writer'=>$json_rows[2], >
+        }
+        $json=json_encode(array('result'=>$result_json), JSON_UNESCAPED_UNICODE);
+        echo $json;
+
+        mysqli_close($con);
+?>

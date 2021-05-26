@@ -1,0 +1,20 @@
+<?php
+        session_start();
+?>
+<form method="post" action="exsession.php">
+        <input type="text" name="id"><br>
+        <input type="password" name="pwd">
+        <input type="submit">
+</from>
+<?php
+        $sid=session_id();
+        echo"<hr><br>session_id:{$sid}<br><br>";
+//      $_SESSION['car']='BMW';
+//      $_SESSION['color']='red';
+
+//      echo"<b>세션 생성 프로그램</b><hr>";
+//      echo"1.세션 초기화: <b>session_start()함수</b> 사용<br>";
+//      echo"2.세션 등록: <b>\$SESSION['변수명']</b> 정의<hr>";
+
+//      echo"<br>세션 등록 성공!<br>";
+?>

@@ -1,0 +1,10 @@
+<form enctype="multipart/form-data" method="post" action="createcont.php">
+        <input type="text" name="ingre[]">
+        <input type="text" name="ingre[]">
+        <input type="text" name="ingre[]"><br>
+        <input type="text" name="ingre_num[]">
+        <input type="text" name="ingre_num[]">
+        <input type="text" name="ingre_num[]">
+        <input type="file" name="cont_img">
+        <input type="submit" value="전송">
+</form>

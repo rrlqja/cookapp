@@ -1,0 +1,26 @@
+<?php
+//      $DbName="database-1.cjzaqcrfyhll.ap-northeast-2.rds.amazonaws.com";
+//      $DbUserName="song";
+//      $DbPwd="123123123";
+//      $con = mysqli_connect($DbName, $DbUserName, $DbPwd);
+//      mysqli_select_db($con, 'exDB');
+
+        include"connect.php";
+
+        $sql="select * from mUser";
+        $result=mysqli_query($con, $sql);
+
+        $count=mysqli_num_fields($result);
+
+        $result_json=array();
+
+        while($json_rows=mysqli_fetch_array($result))
+        {
+                array_push($result_json, array('name'=>$json_rows[0], 'id'=>$json_rows[1], 'pwd'=>$json_rows[2]));
+        }
+        $json=json_encode(array('result'=>$result_json), JSON_UNESCAPED_UNICODE);
+        echo $json;
+
+        mysqli_close($con);
+
+?>

@@ -1,0 +1,20 @@
+<?php
+        include"connect.php";
+
+        $loginId=$_POST['id'];
+        $loginPwd=$_POST['pwd'];
+
+        $sql="select user_id, user_pwd from mUser where mUser.user_id='{$loginId}' and mUser.user_pwd='{$loginPwd}'";
+
+        $result=mysqli_query($con, $sql);
+
+        $count=mysqli_num_rows($result);
+
+        if($count>=1){
+                echo"login good";
+        }else{
+                echo"login fuck";
+        }
+
+        mysqli_close($con);
+?>

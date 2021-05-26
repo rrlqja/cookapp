@@ -1,0 +1,19 @@
+<?php
+        include "connect.php";
+
+        $sql="select * from mImage";
+        $result=mysqli_query($con, $sql);
+
+        $count=mysqli_num_fields($result);
+
+        $result_json=array();
+
+        while($json_rows=mysqli_fetch_array($result)){
+                array_push($result_json, array('iName'=>$json_rows[0], 'iMg'=>$json_rows[1]));
+        }
+
+        $json=json_encode(array('result'=>$result_json));
+        echo $json;
+
+        mysqli_close($con);
+?>

@@ -1,0 +1,26 @@
+<?php
+        $ingre=$_POST['ingre'];
+
+        $ingre_size=sizeof($ingre);
+
+        echo "크기: {$ingre_size}<br><br><hr>";
+        for($i=0;$i<$ingre_size;$i++){
+                echo $ingre[$i]."<br><br>";
+        }
+
+
+//      $upload_dir='../upload_files/';
+//      $real_filename=$_FILES['img']['name'];
+//      $nameArr=explode(".", $real_filename);
+//      $ext=$nameArr[sizeof($nameArr)-1];
+//      $tmp_filename="aa".'_'."xx".'.'.strtolower($ext);
+//      $thum_file=$real_filename.'@@@'.$tmp_filename;
+//      $uploadfile=$upload_dir.$tmp_filename;
+//      if(move_uploaded_file($_FILES['img']['tmp_name'], $uploadfile)){
+//              echo "<img src={$uploadfile}> <br><br>";
+//              echo "성공";
+//      }else{
+//              echo "실패";
+//      }
+
+?>

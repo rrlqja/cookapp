@@ -1,0 +1,25 @@
+<?php
+        include "connect.php";
+
+        $id=$_POST['id'];
+        $pwd=$_POST['pwd'];
+
+//      echo $id."<br><br>".$pwd."<br><br>";
+
+        $sql="select * from mUser where user_id='{$id}' and user_pwd='{$pwd}'";
+
+        $result=mysqli_query($con, $sql);
+
+        $count=mysqli_num_rows($result);
+
+//      echo $count;
+
+        if($count===1){
+                echo"success";
+        }
+        else{
+                echo"fail";
+        }
+
+        mysqli_close($con);
+?>

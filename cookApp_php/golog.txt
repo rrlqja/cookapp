@@ -1,0 +1,5 @@
+<form method="post" action="findlog.php">
+        <input type="text" name="id">
+        <input type="password" name="pwd">
+        <input type="submit">
+</form>

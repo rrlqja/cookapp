@@ -1,0 +1,23 @@
+<?php
+        include "connect.php";
+
+        $count=$_POST['count'];
+
+        if(isset($count)){
+                $sql="select * from mCon where con_num=$count";
+
+                $result=mysqli_query($con, $sql);
+
+                $result_json=array();
+
+                while($json_rows=mysqli_fetch_array($result)){
+                        array_push($result_json, array('title'=>$json_rows[0], 'cont'=>$json_rows[1], 'writer'=>$json_r>
+                }
+                $json=json_encode(array('result'=>$result_json), JSON_UNESCAPED_UNICODE);
+                echo $json;
+        }else{
+                echo" 출력 실패<br><br>";
+        }
+
+        mysqli_close($con);
+?>

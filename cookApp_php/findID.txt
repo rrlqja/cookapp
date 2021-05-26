@@ -1,0 +1,27 @@
+<?php
+//      $DbName="database-1.cjzaqcrfyhll.ap-northeast-2.rds.amazonaws.com";
+//      $DbUserName="song";
+//      $DbPwd="123123123";
+//      $con = mysqli_connect($DbName, $DbUserName, $DbPwd);
+//      mysqli_select_db($con, 'exDB');
+
+        include"connect.php";
+
+        $findID=$_POST['id'];
+
+        $sql="select userId from mUser where user_id='{$findID}'";
+//      $sql="select userId from mUser where userId='firstId'";
+//      $sql="select * from mUser";
+
+        $result=mysqli_query($con, $sql);
+
+        $count=mysqli_num_rows($result);
+
+        if($count>=1){
+                echo"ID_noPass";
+        }else{
+                echo"ID_Pass";
+        }
+
+        mysqli_close($con);
+?>

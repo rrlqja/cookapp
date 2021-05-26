@@ -1,0 +1,54 @@
+<html>
+        <head>
+                <meta charset="utf-8">
+        </head>
+</html>
+<?php
+        include "connect.php";
+
+        $upload_dir='../upload_files/';
+//      $Upload_dir='http://15.165.241.115/upload_files/';
+
+        echo"이미지 업로드 확인<br><hr>";
+
+        $uploadfile=$upload_dir.basename($_FILES['upload']['name']);
+
+        if(move_uploaded_file($_FILES['upload']['tmp_name'], $uploadfile)){
+                echo" 파일 업로드 성공 <p>";
+                echo"<img src='{$uploadfile}'> <hr>";
+                echo"1. 파일 이름:{$_FILES['upload']['name']}<br>";
+                echo"2. 파일 타입:{$_FILES['upload']['type']}<br>";
+                echo"3. 파일 크기:{$_FILES['upload']['size']}<br>";
+                echo"4. 임시 파일명:{$_FILES['upload']['tmp_name']}";
+        }
+        else{
+                echo" 파일 업로드 실패";
+        }
+
+//      if(isset($name)||isset($uploadfile)){
+//              $sql="insert into mImage values('{$name}', '{$uploadfile}')";
+//              $result=mysqli_query($con, $sql);
+//      }else{
+//              $result=0;
+//      }
+//      if($result){
+//              echo"삽입 성공";
+//      }else{
+
+//      if($_FILES['upfile']['name']>0){
+//              echo"성공<br>";
+//              echo"<img src={$_FILES['upfile']['name'] }><hr>";
+//      }else{
+//              echo"실패";
+//      }
+
+//      if(move_uploaded_file($_FILES['upload']['tmp_name'], $uploadfile)){
+//              echo"업로드 성공";
+//      }else{
+//              echo"업로드 실패";
+//      }
+
+//      echo $uploadfile;
+
+        mysqli_close($con);
+?>

@@ -1,0 +1,33 @@
+<?php
+
+//      $db_host="database-1.cjzaqcrfyhll.ap-northeast-2.rds.amazonaws.com";
+//      $db_user="song";
+//      $db_pwd="123123123";
+//      $con=mysqli_connect($db_host, $db_user, $db_pwd);
+//      $db=mysqli_select_db($con, 'exDB');
+
+        include "connect.php";
+
+        $id=$_POST['id'];
+        $name=$_POST['name'];
+        $pwd=$_POST['pwd'];
+//      $email=$_POST['email'];
+
+        if(isset($id)||isset($name)||isset($pwd)){
+                $sql="insert into mUser values('{$name}', '{$id}', '{$pwd}')";
+                $result=mysqli_query($con, $sql);
+        }else{
+                $result=0;
+        }
+//      $sql="insert into mUser values('{$name}', '{$id}', '{$pwd}', '${email}')";
+//      $result=mysqli_query($con, $sql);
+
+        if($result){
+                echo"삽입 성공".$result;
+        }else{
+                echo"삽입 실패";
+        }
+
+        mysqli_close($con);
+
+?>
