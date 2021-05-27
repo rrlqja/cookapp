@@ -1,12 +1,10 @@
 package com.example.cookapp1;
 
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
@@ -26,9 +24,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -39,10 +34,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,6 +47,8 @@ public class createCont extends AppCompatActivity {
 
     EditText editText1, editText2;
     ImageView imageView1;
+
+    String user_id;
 
     String title = "";
     Bitmap cont_img;
@@ -103,6 +99,7 @@ public class createCont extends AppCompatActivity {
     static int Pos = 0;
 
     String create_url = "http://15.165.241.115/db/createcont.php";
+    String excreate_url = "http://15.165.241.115/db/excreatecont.php";
 
     static String[] ingre_num_strings = new String[20];
     static String[] ingre_strings = new String[20];
@@ -218,9 +215,9 @@ public class createCont extends AppCompatActivity {
         imageView1.setImageMatrix(matrix1);
 
         Intent getintent = getIntent();
-        String userid = getintent.getStringExtra("userid");
+        user_id = getintent.getStringExtra("userid");
 
-        textView1.setText(userid);
+        textView1.setText(user_id);
 
         recyclerView1 = findViewById(R.id.sequence);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this){
@@ -652,17 +649,17 @@ public class createCont extends AppCompatActivity {
             return getS(saveContItems[0]);
         }
         protected void onPostExecute(String result) {
-            Toast.makeText(createCont.this, result, Toast.LENGTH_LONG).show();
+            Toast.makeText(createCont.this, "**" + result, Toast.LENGTH_LONG).show();
         }
 
         private String getS(saveContItem saveContItem) {
-            String boundary = "*****";
+            String boundary = "***^^^^***";
             exsvcont = new exsvcont();
 
             String title = saveContItem.getTitle();
             String cont = saveContItem.getCont();
-            Bitmap cont_img = saveContItem.getCont_img();
             Uri cont_img_uri = saveContItem.getCont_img_uri();
+            Bitmap cont_img = saveContItem.getCont_img();
             String cont_img_absolute_uri = saveContItem.getCont_img_absolute_uri();
 
             String[] ingre_num = saveContItem.getIngre_num();
@@ -675,22 +672,36 @@ public class createCont extends AppCompatActivity {
 
             String[] sequence_num = saveContItem.getSequence_num();
             String[] sequence = saveContItem.getSequence();
-            Bitmap[] sequence_img = saveContItem.getSequence_img();
             Uri[] sequence_img_uri = saveContItem.getSequence_img_uri();
+            Bitmap[] sequence_img = saveContItem.getSequence_img();
             String[] sequence_img_absolute_uri = saveContItem.getSequence_img_absolute_uri();
 
-            String param = "";
-
-//            param += "title=" + title + " &cont=" + cont;
-//            param += "title=" + title + " &cont=" + cont + " &cont_img=" + cont_img;
+            int ingre_count = 0;
+            for (int i = 0; i < ingre.length; i++) {
+                if (ingre[i] != null) {
+                    ingre_count++;
+                }
+            }
+            int season_count = 0;
+            for (int i = 0; i < season.length; i++) {
+                if (season[i] != null) {
+                    season_count++;
+                }
+            }
+            int sequence_count = 0;
+            for (int i = 0; i < sequence.length; i++) {
+                if (sequence[i] != null) {
+                    sequence_count++;
+                }
+            }
 
             HttpURLConnection conn = null;
             try {
                 URL url = new URL(create_url);
                 conn = (HttpURLConnection) url.openConnection();
 
-                conn.setReadTimeout(5000);
-                conn.setConnectTimeout(5000);
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(10000);
                 conn.setRequestMethod("POST");
 //                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
                 conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
@@ -698,11 +709,25 @@ public class createCont extends AppCompatActivity {
                 conn.connect();
 
                 DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+//                wr.writeBytes("\r\n--" + boundary + "\r\n");
+//                wr.writeBytes("Content-Disposition: form-data; name=\"\" \r\n\r\n" +"");
+//
                 wr.writeBytes("\r\n--" + boundary + "\r\n");
-                wr.writeBytes("Content-Disposition: form-data; name=\"title\" \r\n\r\n" + title);
+                wr.writeBytes("Content-Disposition: form-data; name=\"ingre_count\" \r\n\r\n" + ingre_count);
+                wr.writeBytes("\r\n--" + boundary + "\r\n");
+                wr.writeBytes("Content-Disposition: form-data; name=\"season_count\" \r\n\r\n" + season_count);
+                wr.writeBytes("\r\n--" + boundary + "\r\n");
+                wr.writeBytes("Content-Disposition: form-data; name=\"sequence_count\" \r\n\r\n" + sequence_count);
 
                 wr.writeBytes("\r\n--" + boundary + "\r\n");
-                wr.writeBytes("Content-Disposition: form-data; name=\"cont_img\"; filename=\"aaimg.jpg\" \r\n ");
+                wr.writeBytes("Content-Disposition: form-data; name=\"title\" \r\n\r\n" + URLEncoder.encode(title, "utf-8"));
+                wr.writeBytes("\r\n--" + boundary + "\r\n");
+                wr.writeBytes("Content-Disposition: form-data; name=\"cont\" \r\n\r\n" + URLEncoder.encode(cont, "utf-8"));
+                wr.writeBytes("\r\n--" + boundary + "\r\n");
+                wr.writeBytes("Content-Disposition: form-data; name=\"user_id\" \r\n\r\n" + user_id);
+
+                wr.writeBytes("\r\n--" + boundary + "\r\n");
+                wr.writeBytes("Content-Disposition: form-data; name=\"cont_img\"; filename=\"cont_img.jpg\" \r\n ");
                 wr.writeBytes("Content-Type: application/octet-stream\r\n\r\n");
                 ParcelFileDescriptor r = createCont.this.getContentResolver().openFileDescriptor(cont_img_uri, "r", null);
                 FileInputStream fileInputStream = new FileInputStream(r.getFileDescriptor());
@@ -710,7 +735,6 @@ public class createCont extends AppCompatActivity {
                 int maxBufferSize = 1024;
                 int bufferSize = Math.min(bytesAvailable, maxBufferSize);
                 byte[] buffer = new byte[bufferSize];
-
                 int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
                 while (bytesRead > 0) {
                     DataOutputStream dataWrite = new DataOutputStream(conn.getOutputStream());
@@ -720,6 +744,50 @@ public class createCont extends AppCompatActivity {
                     bytesRead = fileInputStream.read(buffer, 0, bufferSize);
                 }
                 fileInputStream.close();
+
+                for (int i = 0; i < ingre_count; i++) {
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"ingre_num[]\" \r\n\r\n" + URLEncoder.encode(ingre_num[i], "utf-8"));
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"ingre[]\" \r\n\r\n" + URLEncoder.encode(ingre[i], "utf-8"));
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"ingre_we[]\" \r\n\r\n" + URLEncoder.encode(ingre_we[i], "utf-8"));
+                }
+
+                for (int i = 0; i < season_count; i++) {
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"season_num[]\" \r\n\r\n" + URLEncoder.encode(season_num[i], "utf-8"));
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"season[]\" \r\n\r\n" + URLEncoder.encode(season[i], "utf-8"));
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"season_we[]\" \r\n\r\n" + URLEncoder.encode(season_we[i], "utf-8"));
+                }
+
+                for (int i = 0; i < sequence_count; i++) {
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"sequence_num[]\" \r\n\r\n" + URLEncoder.encode(sequence_num[i], "utf-8"));
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"sequence[]\" \r\n\r\n" + URLEncoder.encode(sequence[i], "utf-8"));
+
+                    wr.writeBytes("\r\n--" + boundary + "\r\n");
+                    wr.writeBytes("Content-Disposition: form-data; name=\"sequence_img[]\"; filename=\"sequence_img.jpg\" \r\n ");
+                    wr.writeBytes("Content-Type: application/octet-stream\r\n\r\n");
+                    ParcelFileDescriptor sq = createCont.this.getContentResolver().openFileDescriptor(sequence_img_uri[i], "r", null);
+                    FileInputStream sqfileInputStream = new FileInputStream(sq.getFileDescriptor());
+                    int sqbytesAvailable = sqfileInputStream.available();
+                    int sqmaxBufferSize = 1024;
+                    int sqbufferSize = Math.min(sqbytesAvailable, sqmaxBufferSize);
+                    byte[] sqbuffer = new byte[sqbufferSize];
+                    int sqbytesRead = sqfileInputStream.read(sqbuffer, 0, sqbufferSize);
+                    while (sqbytesRead > 0) {
+                        DataOutputStream sqdataWrite = new DataOutputStream(conn.getOutputStream());
+                        sqdataWrite.write(sqbuffer, 0, sqbufferSize);
+                        sqbytesAvailable = sqfileInputStream.available();
+                        sqbufferSize = Math.min(sqbytesAvailable, sqmaxBufferSize);
+                        sqbytesRead = sqfileInputStream.read(sqbuffer, 0, sqbufferSize);
+                    }
+                    sqfileInputStream.close();
+                }
 
                 wr.writeBytes("\r\n--" + boundary + "--\r\n");
                 wr.flush();

@@ -251,7 +251,7 @@ public class home extends AppCompatActivity {
                     recyclerItem.setLike(result_json.getInt("mlike"));
                     recyclerItem.setDate(result_json.getString("con_date"));
                     recyclerItem.setNum(result_json.getInt("con_num"));
-                    recyclerItem.setImg(original_url + result_json.getString("img_src"));
+                    recyclerItem.setImg(original_url + result_json.getString("img_src").substring(2));
 
                     recyclerItemList.add(recyclerItem);
 
