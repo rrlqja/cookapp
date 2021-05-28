@@ -12,7 +12,7 @@
 
         $title=urldecode($_POST['title']);
         $cont=urldecode($_POST['cont']);
-        $user_id=$_POST['user_id'];
+        $writer_id=$_POST['user_id'];
 
         $ingre_count=$_POST['ingre_count'];
         $season_count=$_POST['season_count'];
@@ -31,7 +31,7 @@
                 echo"실패";
         }
 
-        $insert_sql="insert into mCon values('" .$title. "', '" .$cont. "', '" .$user_id. "', '" .NULL. "', now(), '" .$upfile. "')";
+        $insert_sql="insert into mCon values('" .$title. "', '" .$cont. "', '" .$writer_id. "', '" .NULL. "', now(), '" .$upfile. "')";
         $insert_result=mysqli_query($con, $insert_sql);
 
         echo $title;
@@ -66,7 +66,7 @@
                 $sequence_img_realname=$_FILES['sequence_img']['name'][$i];
                 $sequence_nameArr=explode(".", $sequence_img_realname);
                 $sequence_ext=$sequence_nameArr[sizeof($sequence_nameArr)-1];
-                $sequence_tmp_filename="title_".$title."_".$sequence_nameArr[0]."_"."sequence_num_".$sequence_num."_".$sequence_now_time.".">
+                $sequence_tmp_filename="title_".$title."_".$sequence_nameArr[0]."_"."sequence_num_".$sequence_num."_".$sequence_now_time.".".strtolower($sequence_ext);
                 $sequence_upfile=$sequence_upload_dir.$sequence_tmp_filename;
                 if(move_uploaded_file($_FILES['sequence_img']['tmp_name'][$i], $sequence_upfile)){
                         echo"성공";
@@ -74,11 +74,9 @@
                         echo"실패";
                 }
 
-                $sequence_sql="insert into cont_sequence values('".$cont_size."', '".$sequence_num."', '".$sequence."', '".$sequence_upfile.>
+                $sequence_sql="insert into cont_sequence values('".$cont_size."', '".$sequence_num."', '".$sequence."', '".$sequence_upfile."')";
                 $sequence_result=mysqli_query($con, $sequence_sql);
         }
-
-
 
         echo $cont_size;
 

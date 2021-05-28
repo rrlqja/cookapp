@@ -5,13 +5,35 @@
 
         $sql="select * from mCon where con_num={$con_num}";
         $result=mysqli_query($con, $sql);
-
         $result_json=array();
-
         while($json_rows=mysqli_fetch_array($result)){
-                array_push($result_json, array('title'=>$json_rows[0], 'cont'=>$json_rows[1], 'writer'=>$json_rows[2], >
+                array_push($result_json, array('title'=>$json_rows[0], 'cont'=>$json_rows[1], 'writer'=>$json_rows[2], 'con_num'=>$json_rows[3], 'con_date'=>$json_rows[4], 'img_src'=>$json_rows[5]));
         }
-        $json=json_encode(array('result'=>$result_json), JSON_UNESCAPED_UNICODE);
+//      $json=json_encode(array('result'=>$result_json), JSON_UNESCAPED_UNICODE);
+
+        $ingre_sql="select ingre_num, ingre, ingre_we from cont_ingre where con_num={$con_num} order by ingre_num asc";
+        $ingre_result=mysqli_query($con, $ingre_sql);
+        $ingre_result_json=array();
+        while($ingre_json_rows=mysqli_fetch_array($ingre_result)){
+                array_push($ingre_result_json, array('ingre_num'=>$ingre_json_rows[0], 'ingre'=>$ingre_json_rows[1], 'ingre_we'=>$ingre_json_rows[2]));
+        }
+
+        $season_sql="select season_num, season, season_we from cont_season where con_num={$con_num} order by season_num asc";
+        $season_result=mysqli_query($con, $season_sql);
+        $season_result_json=array();
+        while($season_json_rows=mysqli_fetch_array($season_result)){
+                array_push($season_result_json, array('season_num'=>$season_json_rows[0], 'season'=>$season_json_rows[1], 'season_we'=>$season_json_rows[2]));
+        }
+
+        $sequence_sql="select sequence_num, sequence, sequence_img from cont_sequence where con_num={$con_num} order by sequence_num asc";
+        $sequence_result=mysqli_query($con, $sequence_sql);
+        $sequence_result_json=array();
+        while($sequence_json_rows=mysqli_fetch_array($sequence_result)){
+                array_push($sequence_result_json, array('sequence_num'=>$sequence_json_rows[0], 'sequence'=>$sequence_json_rows[1], 'sequence_img_src'=>$sequence_json_rows[2]));
+        }
+
+        $json=json_encode(array('result'=>$result_json, 'ingre_result'=>$ingre_result_json, 'season_result'=>$season_result_json, 'sequence_result'=>$sequence_result_json), JSON_UNESCAPED_UNICODE);
+
 
         echo$json;
 ?>

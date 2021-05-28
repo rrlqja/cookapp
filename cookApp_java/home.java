@@ -1,5 +1,6 @@
 package com.example.cookapp1;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +33,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class home extends AppCompatActivity {
+    public static Activity _home;
+
     TextView textView1, textView2;
     Button button1, button2, button3;
     SwipeRefreshLayout swipeRefreshLayout1;
@@ -76,13 +79,23 @@ public class home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        Intent getintent = getIntent();
+        userID = getintent.getStringExtra("userid");
+
+        count = 0;
+        titleallList.clear();
+        writerallList.clear();
+        contList.clear();
+        recyclerItemList.clear();
+        llist.clear();
+        isLoading = false;
+
+        _home = home.this;
+
         textView2 = findViewById(R.id.tx2);
         button1 = findViewById(R.id.bt1);
         button2 = findViewById(R.id.bt2);
         swipeRefreshLayout1 = findViewById(R.id.swip1);
-
-        Intent getintent = getIntent();
-        userID = getintent.getStringExtra("userid");
 
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -95,6 +108,7 @@ public class home extends AppCompatActivity {
             @Override
             public void run() {
                 initAdapter();
+                refresh();
             }
         }, 1000);
 

@@ -87,7 +87,6 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
             Matrix matrix1 = new Matrix();
             matrix1.postScale(1.0f, 1.0f);
             imageView1.setImageMatrix(matrix1);
-
             imageView1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,6 +98,27 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
 
                         }
                     }
+                }
+            });
+
+            editText1.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    int position = getAdapterPosition();
+                    mItemList.get(position).setSequence_cont(s.toString());
+                    strings[position] = s.toString();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    int position = getAdapterPosition();
+                    mItemList.get(position).setSequence_cont(s.toString());
+                    strings[position] = s.toString();
                 }
             });
         }
@@ -114,34 +134,33 @@ public class sequencerecycleradapter extends RecyclerView.Adapter<RecyclerView.V
         Bitmap img = mItemList.get(position).getSequence_img();
 
         viewHolder.editText1.setHint(edHint[position % 3]);
-
         viewHolder.editText1.setText(cont);
-        sequence_item = new sequence_item();
-        viewHolder.editText1.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mItemList.get(position).setSequence_cont(s.toString());
-                strings[position] = s.toString();
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                mItemList.get(position).setSequence_cont(s.toString());
-                strings[position] = s.toString();
-            }
-        });
+//        sequence_item = new sequence_item();
+//        viewHolder.editText1.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                mItemList.get(position).setSequence_cont(s.toString());
+//                strings[position] = s.toString();
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                mItemList.get(position).setSequence_cont(s.toString());
+//                strings[position] = s.toString();
+//            }
+//        });
 
         viewHolder.textView1.setText(num);
 
         Matrix matrix1 = new Matrix();
         matrix1.postScale(1.0f, 1.0f);
         viewHolder.imageView1.setImageMatrix(matrix1);
-
         viewHolder.imageView1.setImageBitmap(img);
 
     }

@@ -62,7 +62,7 @@ public class createCont extends AppCompatActivity {
 
     static boolean imgpass = false;
 
-    TextView textView1;
+//    TextView textView1;
 //    ImageView imageView2;
     ListView listView1, listView2;
 
@@ -114,15 +114,15 @@ public class createCont extends AppCompatActivity {
     static String[] sequence_imgs_absolute_urls = new String[20];
 
 
-    TextView svtx1, svtx2, svtx3, svtx4, svtx5, svtx6, svtx7, svtx8;
-    ImageView sviv1;
+//    TextView svtx1, svtx2, svtx3, svtx4, svtx5, svtx6, svtx7, svtx8;
+//    ImageView sviv1;
 
     saveCont saveCont;
     exsvcont exsvcont;
 
 
     static String[] result_ingre = new String[10];
-    TextView resultingre;
+//    TextView resultingre;
 
 
     @Override
@@ -173,19 +173,18 @@ public class createCont extends AppCompatActivity {
             }
         });
 
-        svtx1 = findViewById(R.id.sv_ingre_num);
-        svtx2 = findViewById(R.id.sv_ingre);
-        svtx3 = findViewById(R.id.sv_ingre_we);
-        svtx4 = findViewById(R.id.sv_season_num);
-        svtx5 = findViewById(R.id.sv_season);
-        svtx6 = findViewById(R.id.sv_season_we);
-        svtx7 = findViewById(R.id.sv_sequence_num);
-        svtx8 = findViewById(R.id.sv_sequence);
-        sviv1 = findViewById(R.id.sv_sequence_img);
+//        svtx1 = findViewById(R.id.sv_ingre_num);
+//        svtx2 = findViewById(R.id.sv_ingre);
+//        svtx3 = findViewById(R.id.sv_ingre_we);
+//        svtx4 = findViewById(R.id.sv_season_num);
+//        svtx5 = findViewById(R.id.sv_season);
+//        svtx6 = findViewById(R.id.sv_season_we);
+//        svtx7 = findViewById(R.id.sv_sequence_num);
+//        svtx8 = findViewById(R.id.sv_sequence);
+//        sviv1 = findViewById(R.id.sv_sequence_img);
+//        resultingre = findViewById(R.id.resultingre);
 
-        resultingre = findViewById(R.id.resultingre);
-
-        textView1 = findViewById(R.id.tv1);
+//        textView1 = findViewById(R.id.tv1);
 //        textView2 = findViewById(R.id.exedtx);
         imageView1 = findViewById(R.id.ibimg);
 //        imageView2 = findViewById(R.id.testimg);
@@ -217,7 +216,7 @@ public class createCont extends AppCompatActivity {
         Intent getintent = getIntent();
         user_id = getintent.getStringExtra("userid");
 
-        textView1.setText(user_id);
+//        textView1.setText(user_id);
 
         recyclerView1 = findViewById(R.id.sequence);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this){
@@ -244,7 +243,7 @@ public class createCont extends AppCompatActivity {
         sequence_recyclerAdapter.setOnItemClickListener(new sequencerecycleradapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                Toast.makeText(createCont.this, "아이템 터치", Toast.LENGTH_LONG).show();
+//                Toast.makeText(createCont.this, "아이템 터치", Toast.LENGTH_LONG).show();
 //                txttv.setText(String.valueOf(position));
 
                 Intent intent = new Intent();
@@ -327,6 +326,7 @@ public class createCont extends AppCompatActivity {
             }
 
             sequence_items.get(Pos).setSequence_img(bitmap);
+//            sequence_recyclerAdapter.notifyItemChanged(Pos);
             sequence_recyclerAdapter.notifyDataSetChanged();
 
         }
@@ -382,6 +382,8 @@ public class createCont extends AppCompatActivity {
             ingre_listAdapter.notifyDataSetChanged();
 
             ingre_listheight();
+        }else {
+            Toast.makeText(createCont.this, "더 이상 생성할 수 없습니다.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -394,6 +396,8 @@ public class createCont extends AppCompatActivity {
             season_listAdapter.notifyDataSetChanged();
 
             season_listheight();
+        } else {
+            Toast.makeText(createCont.this, "더 이상 생성할 수 없습니다.", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -402,6 +406,7 @@ public class createCont extends AppCompatActivity {
         season_pass = false;
 
         if (sequence_items.size() >= 20) {
+            Toast.makeText(createCont.this, "더 이상 생성할 수 없습니다.", Toast.LENGTH_LONG).show();
         } else {
             sequence_item = new sequence_item();
 
@@ -598,19 +603,22 @@ public class createCont extends AppCompatActivity {
         saveContItem.setSequence_img_absolute_uri(sequence_imgs_absolute_urls);
 
         if ((ingre_pass == true) && (season_pass == true) && (sequence_pass == true) && (title_pass == true) && (cont_pass == true) && (cont_img_pass == true)) {
-            svtx1.setText(ingre_num_strings[ingre_num.size() - 1]);
-            svtx2.setText(ingre_strings[ingre_list.size() - 1]);
-            svtx3.setText(ingre_we_strings[ingre_we_list.size() - 1]);
+//            svtx1.setText(ingre_num_strings[ingre_num.size() - 1]);
+//            svtx2.setText(ingre_strings[ingre_list.size() - 1]);
+//            svtx3.setText(ingre_we_strings[ingre_we_list.size() - 1]);
+//
+//            svtx4.setText(season_num_strings[season_num.size() - 1]);
+//            svtx5.setText(season_strings[season_list.size() - 1]);
+//            svtx6.setText(season_we_strings[season_we_list.size() - 1]);
+//
+//            svtx7.setText(sequence_nums_strings[sequence_num.size() - 1]);
+//            svtx8.setText(sequence_conts_strings[sequence_cont.size() - 1]);
+////            sviv1.setImageBitmap(sequence_imgs_bitmap[sequence_img.size() - 1]);
+//            Bitmap[] bb = saveContItem.getSequence_img();
+//            sviv1.setImageBitmap(bb[0]);
 
-            svtx4.setText(season_num_strings[season_num.size() - 1]);
-            svtx5.setText(season_strings[season_list.size() - 1]);
-            svtx6.setText(season_we_strings[season_we_list.size() - 1]);
-
-            svtx7.setText(sequence_nums_strings[sequence_num.size() - 1]);
-            svtx8.setText(sequence_conts_strings[sequence_cont.size() - 1]);
-//            sviv1.setImageBitmap(sequence_imgs_bitmap[sequence_img.size() - 1]);
-            Bitmap[] bb = saveContItem.getSequence_img();
-            sviv1.setImageBitmap(bb[0]);
+            saveCont = new saveCont();
+            saveCont.execute(saveContItem);
         } else {
         }
 
@@ -624,9 +632,6 @@ public class createCont extends AppCompatActivity {
 //        } catch (Exception e) {
 //            Toast.makeText(createCont.this, e.toString(), Toast.LENGTH_LONG).show();
 //        }
-
-        saveCont = new saveCont();
-        saveCont.execute(saveContItem);
 
 //        Toast.makeText(createCont.this, saveContItem.getTitle(), Toast.LENGTH_LONG).show();
 //
@@ -649,7 +654,24 @@ public class createCont extends AppCompatActivity {
             return getS(saveContItems[0]);
         }
         protected void onPostExecute(String result) {
-            Toast.makeText(createCont.this, "**" + result, Toast.LENGTH_LONG).show();
+//            Toast.makeText(createCont.this, "**" + result, Toast.LENGTH_LONG).show();
+            Toast.makeText(createCont.this, "등록중", Toast.LENGTH_LONG).show();
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(createCont.this, home.class);
+                    intent.putExtra("userid", user_id);
+//                    startActivityForResult(intent, 1);
+
+                    home home = (com.example.cookapp1.home) com.example.cookapp1.home._home;
+                    home.finish();
+                    startActivity(intent);
+
+                    finish();
+                }
+            }, 2000);
         }
 
         private String getS(saveContItem saveContItem) {

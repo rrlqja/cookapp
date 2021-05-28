@@ -6,30 +6,118 @@
     android:layout_height="match_parent"
     tools:context=".contView">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        android:fillViewport="true">
 
-        <TextView
-            android:id="@+id/tv1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
-        </TextView>
-        <TextView
-            android:id="@+id/tv2"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-        </TextView>
-        <TextView
-            android:id="@+id/tv3"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-        </TextView>
-        <TextView
-            android:id="@+id/tv4"
-            android:layout_width="match_parent"
-            android:layout_height="100dp">
-        </TextView>
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/contview_title"
+                    android:gravity="center_vertical"
+                    android:text="title"
+                    android:textSize="30sp"
+                    android:layout_width="match_parent"
+                    android:minHeight="70dp"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <ImageView
+                    android:id="@+id/contview_cont_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp">
+                </ImageView>
+                <TextView
+                    android:id="@+id/contview_cont"
+                    android:gravity="center"
+                    android:text="cont"
+                    android:layout_width="match_parent"
+                    android:minHeight="150dp"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <TextView
+                    android:id="@+id/contview_writer"
+                    android:gravity="center|right"
+                    android:text="writer"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center|left"
+                    android:text="필요 재료"
+                    android:layout_width="match_parent"
+                    android:minHeight="40dp"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ingre_recycleview"
+                    android:paddingLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center|left"
+                    android:text="필요 양념"
+                    android:layout_width="match_parent"
+                    android:minHeight="40dp"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/season_recycleview"
+                    android:paddingLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:gravity="center|left"
+                    android:text="조리 순서"
+                    android:layout_width="match_parent"
+                    android:minHeight="40dp"
+                    android:layout_height="wrap_content">
+                </TextView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/sequence_recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
