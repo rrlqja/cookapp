@@ -5,26 +5,34 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
+        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal">
+        android:minHeight="60dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#DCDADA">
 
         <TextView
+            android:background="#FAFAFA"
             android:id="@+id/ingre_season_name"
             android:text="ingre/season_name"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
-
+            android:minHeight="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp">
         </TextView>
         <TextView
+            android:layout_marginLeft="3dp"
+            android:background="#FAFAFA"
             android:id="@+id/ingre_season_we"
             android:text="ingre/season_we"
             android:gravity="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:minHeight="60dp"
+            android:layout_height="wrap_content">
         </TextView>
     </LinearLayout>
 </LinearLayout>

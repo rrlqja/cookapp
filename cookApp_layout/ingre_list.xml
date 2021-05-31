@@ -10,6 +10,8 @@
         android:orientation="horizontal">
 
         <EditText
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:id="@+id/ingre"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -18,6 +20,8 @@
             android:hint=" 재료 ">
         </EditText>
         <EditText
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:id="@+id/ingre_we"
             android:layout_weight="1"
             android:layout_width="0dp"

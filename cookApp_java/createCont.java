@@ -1,21 +1,28 @@
 package com.example.cookapp1;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageDecoder;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.ParcelFileDescriptor;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -24,11 +31,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -38,10 +52,13 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class createCont extends AppCompatActivity {
+
+    public static Activity _createcont;
 
     saveContItem saveContItem;
 
@@ -120,9 +137,13 @@ public class createCont extends AppCompatActivity {
     saveCont saveCont;
     exsvcont exsvcont;
 
+    ArrayList<Bitmap> resizeBits = new ArrayList<>();
+
 
     static String[] result_ingre = new String[10];
 //    TextView resultingre;
+
+    Activity activity = this;
 
 
     @Override
@@ -135,6 +156,8 @@ public class createCont extends AppCompatActivity {
         editText1 = findViewById(R.id.title);
         imageView1 = findViewById(R.id.ibimg);
         editText2 = findViewById(R.id.cont);
+
+        _createcont = createCont.this;
 
         editText1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -235,7 +258,19 @@ public class createCont extends AppCompatActivity {
             }
         }, 1000);
 
+//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+
     }
+
+//    public static void verifyStoragePermissions(Activity activity) {
+//        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+//
+//        if (permission != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(
+//                    activity, PERMISSIONS_STROAGE, REQUEST_EXTERNAL_STORAGE
+//            );
+//        }
+//    }
 
     public void initadp() {
         sequence_recyclerAdapter = new sequencerecycleradapter(sequence_items);
@@ -291,11 +326,13 @@ public class createCont extends AppCompatActivity {
             Uri uri = data.getData();
             Bitmap bitmap = null;
 
+
             try {
                 bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(getContentResolver(), uri));
 
                 cont_img_Uri = uri;
-//                Toast.makeText(createCont.this, uri.toString(), Toast.LENGTH_LONG).show();
+
+
             } catch (Exception e) {
             }
 
@@ -303,14 +340,9 @@ public class createCont extends AppCompatActivity {
             imageView1.setBackground(bitmapDrawable);
 
             cont_img_absol_uri = getpath(uri);
-//            cont_img_absol_uri = getpth(this, uri);
-            Toast.makeText(createCont.this, cont_img_absol_uri, Toast.LENGTH_LONG).show();
-//            new AlertDialog.Builder(this).setMessage(uri.toString()+"\nmm\n"+cont_img_absol_uri).create().show();
 
             cont_img = bitmap;
             cont_img_pass = true;
-
-//            imageView2.setImageBitmap(bitmap);
         }
 
         if (requestCode == 2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
@@ -330,6 +362,7 @@ public class createCont extends AppCompatActivity {
             sequence_recyclerAdapter.notifyDataSetChanged();
 
         }
+
     }
 
     public String getpath(Uri uri) {
@@ -386,7 +419,6 @@ public class createCont extends AppCompatActivity {
             Toast.makeText(createCont.this, "더 이상 생성할 수 없습니다.", Toast.LENGTH_LONG).show();
         }
     }
-
     public void addseasonList(View view) {
         season_pass = false;
 
@@ -400,7 +432,6 @@ public class createCont extends AppCompatActivity {
             Toast.makeText(createCont.this, "더 이상 생성할 수 없습니다.", Toast.LENGTH_LONG).show();
         }
     }
-
     public void addsequenceList(View view) {
         imgpass = false;
         season_pass = false;
@@ -603,47 +634,13 @@ public class createCont extends AppCompatActivity {
         saveContItem.setSequence_img_absolute_uri(sequence_imgs_absolute_urls);
 
         if ((ingre_pass == true) && (season_pass == true) && (sequence_pass == true) && (title_pass == true) && (cont_pass == true) && (cont_img_pass == true)) {
-//            svtx1.setText(ingre_num_strings[ingre_num.size() - 1]);
-//            svtx2.setText(ingre_strings[ingre_list.size() - 1]);
-//            svtx3.setText(ingre_we_strings[ingre_we_list.size() - 1]);
-//
-//            svtx4.setText(season_num_strings[season_num.size() - 1]);
-//            svtx5.setText(season_strings[season_list.size() - 1]);
-//            svtx6.setText(season_we_strings[season_we_list.size() - 1]);
-//
-//            svtx7.setText(sequence_nums_strings[sequence_num.size() - 1]);
-//            svtx8.setText(sequence_conts_strings[sequence_cont.size() - 1]);
-////            sviv1.setImageBitmap(sequence_imgs_bitmap[sequence_img.size() - 1]);
-//            Bitmap[] bb = saveContItem.getSequence_img();
-//            sviv1.setImageBitmap(bb[0]);
 
             saveCont = new saveCont();
             saveCont.execute(saveContItem);
+            Toast.makeText(createCont.this, "등록중입니다. 잠시만 기다려주세요.", Toast.LENGTH_LONG).show();
+
         } else {
         }
-
-//        File file = new File(cont_img_absol_uri);
-//        System.out.println("file abso: "+file.getAbsolutePath());
-//        try {
-////            FileInputStream fileInputStream = new FileInputStream(file.getAbsolutePath());
-//            ParcelFileDescriptor r = createCont.this.getContentResolver().openFileDescriptor(cont_img_Uri, "r", null);
-//            FileInputStream fileInputStream = new FileInputStream(r.getFileDescriptor());
-//            Toast.makeText(createCont.this, "성공", Toast.LENGTH_LONG).show();
-//        } catch (Exception e) {
-//            Toast.makeText(createCont.this, e.toString(), Toast.LENGTH_LONG).show();
-//        }
-
-//        Toast.makeText(createCont.this, saveContItem.getTitle(), Toast.LENGTH_LONG).show();
-//
-//
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                saveCont = new saveCont();
-//                saveCont.execute(ingre_num_strings, ingre_strings, ingre_we_strings, season_num_strings, season_strings, season_we_strings);
-//            }
-//        }, 1500);
 
 
     }
@@ -651,11 +648,10 @@ public class createCont extends AppCompatActivity {
     public class saveCont extends AsyncTask<saveContItem, Void, String> {
         @Override
         protected String doInBackground(saveContItem... saveContItems) {
+
             return getS(saveContItems[0]);
         }
         protected void onPostExecute(String result) {
-//            Toast.makeText(createCont.this, "**" + result, Toast.LENGTH_LONG).show();
-            Toast.makeText(createCont.this, "등록중", Toast.LENGTH_LONG).show();
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
@@ -671,7 +667,7 @@ public class createCont extends AppCompatActivity {
 
                     finish();
                 }
-            }, 2000);
+            }, 1000);
         }
 
         private String getS(saveContItem saveContItem) {
@@ -753,8 +749,11 @@ public class createCont extends AppCompatActivity {
                 wr.writeBytes("Content-Type: application/octet-stream\r\n\r\n");
                 ParcelFileDescriptor r = createCont.this.getContentResolver().openFileDescriptor(cont_img_uri, "r", null);
                 FileInputStream fileInputStream = new FileInputStream(r.getFileDescriptor());
+
+//                FileInputStream fileInputStream = new FileInputStream(cont_img_absolute_uri);
+
                 int bytesAvailable = fileInputStream.available();
-                int maxBufferSize = 1024;
+                int maxBufferSize = 5 * 1024 * 1024;
                 int bufferSize = Math.min(bytesAvailable, maxBufferSize);
                 byte[] buffer = new byte[bufferSize];
                 int bytesRead = fileInputStream.read(buffer, 0, bufferSize);
@@ -797,7 +796,7 @@ public class createCont extends AppCompatActivity {
                     ParcelFileDescriptor sq = createCont.this.getContentResolver().openFileDescriptor(sequence_img_uri[i], "r", null);
                     FileInputStream sqfileInputStream = new FileInputStream(sq.getFileDescriptor());
                     int sqbytesAvailable = sqfileInputStream.available();
-                    int sqmaxBufferSize = 1024;
+                    int sqmaxBufferSize = 5 * 1024 * 1024;
                     int sqbufferSize = Math.min(sqbytesAvailable, sqmaxBufferSize);
                     byte[] sqbuffer = new byte[sqbufferSize];
                     int sqbytesRead = sqfileInputStream.read(sqbuffer, 0, sqbufferSize);

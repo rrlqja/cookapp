@@ -4,13 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".contView">
+    tools:context=".contView"
+    android:background="#DCDADA"
+    android:paddingTop="20dp">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,8 +27,9 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:background="#F9F9F6"
                     android:id="@+id/contview_title"
-                    android:gravity="center_vertical"
+                    android:gravity="center"
                     android:text="title"
                     android:textSize="30sp"
                     android:layout_width="match_parent"
@@ -36,21 +41,49 @@
                     android:layout_width="match_parent"
                     android:layout_height="240dp">
                 </ImageView>
+
+                <LinearLayout
+                    android:background="#F9F9F6"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txdelete"
+                        android:gravity="center"
+                        android:text="삭제하기"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:onClick="del_cont">
+                    </TextView>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_gravity="right"
+                            android:id="@+id/contview_writer"
+                            android:gravity="center"
+                            android:text="writer"
+                            android:layout_width="100dp"
+                            android:layout_height="match_parent">
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+
                 <TextView
+                    android:layout_marginTop="5dp"
+                    android:background="#F9F9F6"
                     android:id="@+id/contview_cont"
                     android:gravity="center"
                     android:text="cont"
                     android:layout_width="match_parent"
-                    android:minHeight="150dp"
+                    android:minHeight="50dp"
                     android:layout_height="wrap_content">
                 </TextView>
-                <TextView
-                    android:id="@+id/contview_writer"
-                    android:gravity="center|right"
-                    android:text="writer"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp">
-                </TextView>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -59,17 +92,19 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_marginTop="5dp"
+                    android:background="#FAFAFA"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:gravity="center|left"
                     android:text="필요 재료"
                     android:layout_width="match_parent"
                     android:minHeight="40dp"
+                    android:paddingLeft="20dp"
                     android:layout_height="wrap_content">
                 </TextView>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ingre_recycleview"
-                    android:paddingLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -77,17 +112,19 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
+                    android:layout_marginTop="5dp"
+                    android:background="#FAFAFA"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:gravity="center|left"
                     android:text="필요 양념"
+                    android:paddingLeft="20dp"
                     android:layout_width="match_parent"
                     android:minHeight="40dp"
                     android:layout_height="wrap_content">
                 </TextView>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/season_recycleview"
-                    android:paddingLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -101,23 +138,46 @@
                 android:layout_marginTop="10dp">
 
                 <TextView
+                    android:layout_marginTop="5dp"
+                    android:background="#FAFAFA"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:gravity="center|left"
                     android:text="조리 순서"
+                    android:paddingLeft="20dp"
                     android:layout_width="match_parent"
                     android:minHeight="40dp"
                     android:layout_height="wrap_content">
                 </TextView>
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/sequence_recycleview"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </androidx.recyclerview.widget.RecyclerView>
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/sequence_recycleview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/contlike_tv"
+                    android:text="좋아요: "
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="insert_contlike">
+                </TextView>
             </LinearLayout>
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

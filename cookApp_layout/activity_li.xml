@@ -11,11 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/listV1"
+        <TextView
+            android:id="@+id/extx1"
+            android:text="기본텍스트"
             android:layout_width="match_parent"
-            android:layout_height="500dp">
-        </ListView>
+            android:minHeight="100dp"
+            android:layout_height="wrap_content">
+        </TextView>
+        <EditText
+            android:id="@+id/exed1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+        </EditText>
         <Button
             android:layout_width="match_parent"
             android:layout_height="70dp"

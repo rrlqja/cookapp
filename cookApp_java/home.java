@@ -35,7 +35,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 public class home extends AppCompatActivity {
     public static Activity _home;
 
-    TextView textView1, textView2;
+    TextView textView1;
+//    TextView textView2;
+
     Button button1, button2, button3;
     SwipeRefreshLayout swipeRefreshLayout1;
     ImageView imageView1;
@@ -92,7 +94,7 @@ public class home extends AppCompatActivity {
 
         _home = home.this;
 
-        textView2 = findViewById(R.id.tx2);
+//        textView2 = findViewById(R.id.tx2);
         button1 = findViewById(R.id.bt1);
         button2 = findViewById(R.id.bt2);
         swipeRefreshLayout1 = findViewById(R.id.swip1);
@@ -271,7 +273,7 @@ public class home extends AppCompatActivity {
 
                     llist.add(recyclerItem);
 
-                    textView2.setText(String.valueOf(recyclerItemList.size()));
+//                    textView2.setText(String.valueOf(recyclerItemList.size()));
                 }
 
             } catch (Exception e) {
@@ -311,6 +313,7 @@ public class home extends AppCompatActivity {
                 Intent intent = new Intent(home.this, contView.class);
                 intent.putExtra("pos", llist.get(pos).getNum());
                 intent.putExtra("position", Integer.parseInt(llist.get(pos).getNum()));
+                intent.putExtra("userid", userID);
                 startActivity(intent);
 
             }

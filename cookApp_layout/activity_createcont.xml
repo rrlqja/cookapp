@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".createCont">
+    tools:context=".createCont"
+    android:layout_marginTop="15dp">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,10 +24,12 @@
                 android:background="#C8C7C3"
                 android:layout_width="match_parent"
                 android:padding="8dp"
-                android:text="레시피 이름"
+                android:text="  레시피 이름"
                 android:textSize="15dp">
             </TextView>
             <EditText
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:minHeight="70dp"
@@ -41,7 +44,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="50dp"
                 android:padding="8dp"
-                android:text="대표 사진"
+                android:text="  대표 사진"
                 android:textSize="15dp">
             </TextView>
             <LinearLayout
@@ -70,10 +73,12 @@
                 android:gravity="center_vertical"
                 android:layout_height="50dp"
                 android:padding="8dp"
-                android:text="요리 설명"
+                android:text="  요리 설명"
                 android:textSize="15dp">
             </TextView>
             <EditText
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:id="@+id/cont"
                 android:layout_width="match_parent"
                 android:minHeight="100dp"
@@ -89,7 +94,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="50dp"
                 android:padding="8dp"
-                android:text="필요 재료"
+                android:text="  필요 재료"
                 android:textSize="15dp">
             </TextView>
             <LinearLayout
@@ -132,7 +137,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="50dp"
                 android:padding="8dp"
-                android:text="필요 양념"
+                android:text="  필요 양념"
                 android:textSize="15dp">
             </TextView>
             <LinearLayout
@@ -168,7 +173,7 @@
                 android:gravity="center_vertical"
                 android:layout_height="50dp"
                 android:padding="8dp"
-                android:text="요리 순서"
+                android:text="  요리 순서"
                 android:textSize="15dp">
             </TextView>
             <LinearLayout

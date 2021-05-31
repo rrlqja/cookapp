@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#E8E3E3">
 
     <LinearLayout
-        android:background="#FAFAFA"
+        android:background="#E8E3E3"
         android:layout_gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="50dp"
             android:layout_marginRight="50dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="150dp"
             android:orientation="vertical">
 
             <EditText
@@ -26,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
-                android:hint="ID">
+                android:hint="  ID">
             </EditText>
             <EditText
                 android:id="@+id/pwd"
@@ -35,7 +36,7 @@
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
                 android:inputType="textPassword"
-                android:hint="PassWord">
+                android:hint="  PassWord">
             </EditText>
 
             <LinearLayout
@@ -49,7 +50,7 @@
                     android:gravity="center_horizontal">
 
                     <Button
-                        android:backgroundTint="#F5ECCE"
+                        android:backgroundTint="#7795EF"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
                         android:layout_weight="1"
@@ -58,7 +59,7 @@
                         android:textColor="@color/black">
                     </Button>
                     <Button
-                        android:backgroundTint="#F5ECCE"
+                        android:backgroundTint="#9EE1B5"
                         android:id="@+id/bt4"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
@@ -68,39 +69,39 @@
                         android:textColor="@color/black">
                     </Button>
                 </LinearLayout>
-                <Button
-                    android:id="@+id/bt3"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:text="gogo"
-                    android:onClick="go">
-                </Button>
-                <Button
-                    android:id="@+id/bt5"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:onClick="gg">
-                </Button>
-                <Button
-                    android:id="@+id/bt6"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:text="리스트뷰"
-                    android:onClick="go_List">
-                </Button>
-                <Button
-                    android:id="@+id/bt7"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:text="이미지 json"
-                    android:onClick="imgJson">
-                </Button>
-                <Button
-                    android:id="@+id/bt8"
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:onClick="contview">
-                </Button>
+<!--                <Button-->
+<!--                    android:id="@+id/bt3"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:text="gogo"-->
+<!--                    android:onClick="go">-->
+<!--                </Button>-->
+<!--                <Button-->
+<!--                    android:id="@+id/bt5"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:onClick="gg">-->
+<!--                </Button>-->
+<!--                <Button-->
+<!--                    android:id="@+id/bt6"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:text="리스트뷰"-->
+<!--                    android:onClick="go_List">-->
+<!--                </Button>-->
+<!--                <Button-->
+<!--                    android:id="@+id/bt7"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:text="이미지 json"-->
+<!--                    android:onClick="imgJson">-->
+<!--                </Button>-->
+<!--                <Button-->
+<!--                    android:id="@+id/bt8"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:onClick="contview">-->
+<!--                </Button>-->
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -1,6 +1,7 @@
 package com.example.cookapp1;
 
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,12 @@ public class contview_sequence_recyclerview_Adapter extends RecyclerView.Adapter
             textView1 = itemView.findViewById(R.id.contview_sequence_num);
             textView2 = itemView.findViewById(R.id.contview_sequence_cont);
             imageView1 = itemView.findViewById(R.id.contview_sequence_img);
+
+
+//            Matrix matrix1 = new Matrix();
+//            matrix1.postScale(1.0f, 1.0f);
+//            imageView1.setImageMatrix(matrix1);
+
         }
     }
 

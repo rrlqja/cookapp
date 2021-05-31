@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="150dp"
+    tools:context=".ask_del_cont"
+    android:background="#EBE0CA">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="게시글을 삭제하시겠습니까?"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/ans_yes"
+                android:backgroundTint="#3C6A23"
+                android:layout_margin="20dp"
+                android:text="예"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:onClick="del_yes">
+            </Button>
+            <Button
+                android:id="@+id/ans_no"
+                android:backgroundTint="#CB9656"
+                android:layout_margin="20dp"
+                android:text="아니오"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:onClick="del_no">
+            </Button>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

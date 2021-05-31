@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.regex.Pattern;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,7 +36,8 @@ public class go_signup extends AppCompatActivity {
     String id, name, pwd;
 //    String email;
 
-    boolean pass = false;
+    boolean pass;
+    boolean pwdpass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +46,12 @@ public class go_signup extends AppCompatActivity {
 
         textView = findViewById(R.id.inpu_text);
         button1 = findViewById(R.id.id_chk);
-    }
-
-    public void inpu(View view) {
         editText1 = findViewById(R.id.inpu_one);
         editText2 = findViewById(R.id.inpu_two);
         editText3 = findViewById(R.id.inpu_three);
-//        editText4 = findViewById(R.id.inpu_four);
+
+        pass = false;
+        pwdpass = false;
 
         editText1.addTextChangedListener(new TextWatcher() {
             @Override
@@ -68,6 +69,9 @@ public class go_signup extends AppCompatActivity {
                 pass = false;
             }
         });
+    }
+
+    public void inpu(View view) {
 
         id = editText1.getText().toString();
         name = editText2.getText().toString();
@@ -77,7 +81,7 @@ public class go_signup extends AppCompatActivity {
         inputUrl inputUrl = new inputUrl();
 
         if (pass == false) {
-            Toast.makeText(getApplicationContext(), "아이디 중복체크를 하십시오.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "아이디 중복체크를 하십시오1.", Toast.LENGTH_LONG).show();
         } else if (id.equals("") || id.equals(null)) {
             Toast.makeText(getApplicationContext(), "아이디를 입력하십시오.", Toast.LENGTH_LONG).show();
         } else if (name.equals("") || name.equals(null)) {
@@ -85,19 +89,14 @@ public class go_signup extends AppCompatActivity {
         } else if (pwd.equals("") || pwd.equals(null)) {
             Toast.makeText(getApplicationContext(), "비밀번호를 입력하십시오.", Toast.LENGTH_LONG).show();
         } else {
-
-            if (pass = false) {
-                Toast.makeText(getApplicationContext(), "아이디 중복체크를 하십시오.", Toast.LENGTH_LONG).show();
+            Pattern ps=Pattern.compile("^[a-zA-Z0-9]+$");
+            if (!ps.matcher(pwd).matches()) {
+                Toast.makeText(getApplicationContext(), "비밀번호는 영어, 숫자만 입력 가능 합니다3.", Toast.LENGTH_LONG).show();
             }else{
                 inputUrl.execute(strUrl, id, name, pwd);
             }
 
-            Intent intent = new Intent(this, MainActivity.class);
-            Toast.makeText(getApplicationContext(), "가입 완료", Toast.LENGTH_LONG).show();
-            startActivity(intent);
-            finish();
         }
-
     }
 
     public void go_idchk(View view) {
@@ -108,8 +107,15 @@ public class go_signup extends AppCompatActivity {
         if (go_id.equals("") || go_id.equals(null)) {
             Toast.makeText(getApplicationContext(), "아이디를 입력해야 합니다.", Toast.LENGTH_LONG).show();
         }else{
-            chk_id chk_id = new chk_id();
-            chk_id.execute(abab, go_id);
+            Pattern ps = Pattern.compile("^[a-zA-Z0-9]+$");
+            if (!ps.matcher(go_id).matches()) {
+                Toast.makeText(getApplicationContext(), "영어, 숫자만 입력 가능 합니다.", Toast.LENGTH_LONG).show();
+
+            }else{
+                chk_id chk_id = new chk_id();
+                chk_id.execute(abab, go_id);
+            }
+
         }
     }
 
@@ -121,7 +127,10 @@ public class go_signup extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-
+            Intent intent = new Intent(go_signup.this, MainActivity.class);
+            Toast.makeText(getApplicationContext(), "가입 완료", Toast.LENGTH_LONG).show();
+            startActivity(intent);
+            finish();
         }
 
         private String getgo(String[] strings) {
