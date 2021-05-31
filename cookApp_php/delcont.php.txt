@@ -1,0 +1,13 @@
+<?php
+        include "connect.php";
+
+        $con_num=$_POST['con_num'];
+
+        $sql="delete from mCon where con_num='".$con_num."'";
+
+        if($result=mysqli_query($con, $sql)){
+                echo"success";
+        }else{
+                echo"fail";
+        }
+?>

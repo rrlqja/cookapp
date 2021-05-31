@@ -2,6 +2,7 @@
         include "connect.php";
 
         $con_num=$_POST['con_num'];
+        $user_id=$_POST['user_id'];
 
         $sql="select * from mCon where con_num={$con_num}";
         $result=mysqli_query($con, $sql);
@@ -32,8 +33,24 @@
                 array_push($sequence_result_json, array('sequence_num'=>$sequence_json_rows[0], 'sequence'=>$sequence_json_rows[1], 'sequence_img_src'=>$sequence_json_rows[2]));
         }
 
-        $json=json_encode(array('result'=>$result_json, 'ingre_result'=>$ingre_result_json, 'season_result'=>$season_result_json, 'sequence_result'=>$sequence_result_json), JSON_UNESCAPED_UNICODE);
+        $contlike_sql="select count(*) from cont_like where con_num={$con_num}";
+        $contlike_result=mysqli_query($con, $contlike_sql);
+        $contlike_result_json=array();
+        while($contlike_json_rows=mysqli_fetch_array($contlike_result)){
+                array_push($contlike_result_json, array('contlike'=>$contlike_json_rows[0]));
+        }
+
+        $contlike_user_sql="select user_id from cont_like where con_num={$con_num}";
+        $contlike_user_result=mysqli_query($con, $contlike_user_sql);
+        $contlike_user_result_json=array();
+        while($contlike_user_json_rows=mysqli_fetch_array($contlike_user_result)){
+                array_push($contlike_user_result_json, array('contlike_user'=>$contlike_user_json_rows[0]));
+        }
+
+        $json=json_encode(array('result'=>$result_json, 'ingre_result'=>$ingre_result_json, 'season_result'=>$season_result_json, 'sequence_result'=>$sequence_result_json, 'contlike_result'=>$contlike_result_json, 'contlike_user_resut'=>$contlike_user_result_json), JSON_UNESCAPED_UNICODE);
 
 
         echo$json;
+
+        mysqli_close($con);
 ?>
