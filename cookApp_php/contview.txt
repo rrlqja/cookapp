@@ -47,7 +47,7 @@
                 array_push($contlike_user_result_json, array('contlike_user'=>$contlike_user_json_rows[0]));
         }
 
-        $json=json_encode(array('result'=>$result_json, 'ingre_result'=>$ingre_result_json, 'season_result'=>$season_result_json, 'sequence_result'=>$sequence_result_json, 'contlike_result'=>$contlike_result_json, 'contlike_user_resut'=>$contlike_user_result_json), JSON_UNESCAPED_UNICODE);
+        $json=json_encode(array('result'=>$result_json, 'ingre_result'=>$ingre_result_json, 'season_result'=>$season_result_json, 'sequence_result'=>$sequence_result_json, 'contlike_result'=>$contlike_result_json, 'contlike_user_result'=>$contlike_user_result_json), JSON_UNESCAPED_UNICODE);
 
 
         echo$json;

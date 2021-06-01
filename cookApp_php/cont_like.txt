@@ -1,0 +1,50 @@
+<?php
+        include "connect.php";
+
+        $con_num=$_POST['con_num'];
+        $user_id=$_POST['user_id'];
+
+//      $sql="select user_id from cont_like where con_num={$con_num}";
+//      $result=mysqli_query($con, $sql);
+//      $result_json=array();
+//      while($result_rows=mysqli_fetch_array($result)){
+//              array_push($result_json, array('user_id'=>$result_rows[0]));
+//      }
+//      $json=json_encode(array('result'=>$result_json));
+//      echo $json;
+
+//      $sql="select * from cont_like where con_num='".$con_num."' and user_id='".$user_id."'";
+//      $result=mysqli_query($con, $sql);
+//      $re=mysqli_fetch_array($result);
+//      if(isset($re)){
+//              echo"값이 있다<br>";
+//      }else{
+//              echo"값이 없다<br>";
+//      }
+
+        $sql="select exists( select * from cont_like where con_num='".$con_num."' and user_id='".$user_id."') as result";
+        $result=mysqli_query($con, $sql);
+
+        $like_result_json=array();
+        $result_like=mysqli_fetch_array($result)[0];
+        if($result_like==1){
+                $del_sql="delete from cont_like where con_num='".$con_num."' and user_id='".$user_id."'";
+                $del_result=mysqli_query($con, $del_sql);
+                array_push($like_result_json, array('like_result'=>'delete'));
+        }else{
+                $insert_sql="insert into cont_like values('".$con_num."', '".$user_id."')";
+                $insert_result=mysqli_query($con, $insert_sql);
+                array_push($like_result_json, array('like_result'=>'insert'));
+        }
+
+        $likenum_sql="select count(*) from cont_like where con_num='".$con_num."'";
+        $likenum_result=mysqli_query($con, $likenum_sql);
+        $likenum_result_re=mysqli_fetch_array($likenum_result)[0];
+        $likenum_result_json=array();
+        array_push($likenum_result_json, array('likenum_result'=>$likenum_result_re));
+
+        $json=json_encode(array('like_result'=>$like_result_json, 'likenum_result'=>$likenum_result_json));
+
+        echo $json;
+
+?>

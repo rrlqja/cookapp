@@ -6,15 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".contView"
     android:background="#DCDADA"
-    android:paddingTop="20dp">
+    android:paddingTop="10dp">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints"
         android:fillViewport="true"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,7 +73,6 @@
                 </LinearLayout>
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:background="#F9F9F6"
                     android:id="@+id/contview_cont"
                     android:gravity="center"
@@ -87,12 +86,12 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginTop="5dp"
                     android:background="#FAFAFA"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -105,7 +104,6 @@
                 </TextView>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/ingre_recycleview"
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -125,7 +123,6 @@
                 </TextView>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/season_recycleview"
-                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </androidx.recyclerview.widget.RecyclerView>
@@ -155,7 +152,7 @@
                     android:orientation="vertical">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="5dp"
                         android:id="@+id/sequence_recycleview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -164,17 +161,31 @@
             </LinearLayout>
 
             <LinearLayout
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
-                android:layout_height="200dp">
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:layout_marginLeft="15dp">
 
-                <TextView
-                    android:gravity="center"
-                    android:id="@+id/contlike_tv"
-                    android:text="좋아요: "
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="70dp"
                     android:layout_height="match_parent"
-                    android:onClick="insert_contlike">
-                </TextView>
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/likeheart"
+                        android:background="@drawable/noheart"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:onClick="insert_contlike">
+                    </ImageView>
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/contlike_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp">
+                    </TextView>
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

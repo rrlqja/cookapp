@@ -1,0 +1,4 @@
+<form content-type="multipart/data-form" method="post" action="extb.php">
+        <input type="text" name="str"><br>
+        <input type="submit">
+</form>

@@ -38,8 +38,10 @@ public class contView extends AppCompatActivity {
     String contviewURL = "http://15.165.241.115/db/contview.php";
     String contlikeURL = "http://15.165.241.115/db/cont_like.php";
 
-    TextView title_textview, cont_textview, writer_textview, contlike_textview, delete_textview;
+    TextView title_textview, cont_textview, writer_textview, delete_textview;
+    TextView contlike_textview;
     ImageView cont_img_imgview;
+    ImageView likeheart_imgview;
 
     contview_ingre_season ingre, season;
     contview_sequence sequence;
@@ -80,6 +82,7 @@ public class contView extends AppCompatActivity {
         contlike_textview = findViewById(R.id.contlike_tv);
         delete_textview = findViewById(R.id.txdelete);
         delete_textview.setVisibility(View.GONE);
+        likeheart_imgview = findViewById(R.id.likeheart);
 
         _contview = contView.this;
 
@@ -219,9 +222,11 @@ public class contView extends AppCompatActivity {
         for (int i = 0; i < contlike_user.size(); i++) {
             if (contlike_user.get(i) != null) {
                 if (contlike_user.get(i).equals(user_id)) {
-                    contlike_textview.setBackgroundColor(Color.parseColor("#FA5882"));
+//                    contlike_textview.setBackgroundColor(Color.parseColor("#FA5882"));
+                    likeheart_imgview.setImageResource(R.drawable.yesheart);
                 }else{
-                    contlike_textview.setBackgroundColor(Color.parseColor("#5795F8"));
+//                    contlike_textview.setBackgroundColor(Color.parseColor("#5795F8"));
+                    likeheart_imgview.setImageResource(R.drawable.noheart);
                 }
             }
         }
@@ -229,9 +234,11 @@ public class contView extends AppCompatActivity {
 
     public void setcontlike_color(String string) {
         if (string.equals("delete")) {
-            contlike_textview.setBackgroundColor(Color.parseColor("#5795F8"));
+//            contlike_textview.setBackgroundColor(Color.parseColor("#5795F8"));
+            likeheart_imgview.setImageResource(R.drawable.noheart);
         } else if (string.equals("insert")) {
-            contlike_textview.setBackgroundColor(Color.parseColor("#FA5882"));
+//            contlike_textview.setBackgroundColor(Color.parseColor("#FA5882"));
+            likeheart_imgview.setImageResource(R.drawable.yesheart);
         }
     }
 

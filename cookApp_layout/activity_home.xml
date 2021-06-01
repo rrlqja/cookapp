@@ -11,9 +11,31 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/searchet"
+                android:hint="요리를 검색해보세요!"
+                android:paddingLeft="20dp"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="1dp">
+            </EditText>
+            <ImageView
+                android:background="@drawable/search"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:onClick="search">
+            </ImageView>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

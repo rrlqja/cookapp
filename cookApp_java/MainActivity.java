@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public void login(View view) {
         editId = findViewById(R.id.id);
         editPwd = findViewById(R.id.pwd);
-        String gId = editId.getText().toString();
+        String gId = editId.getText().toString().trim();
         String gPwd = editPwd.getText().toString();
 
         login_chk login_chk = new login_chk();
@@ -57,20 +57,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-//            editId = findViewById(R.id.id);
-//            editPwd = findViewById(R.id.pwd);
             String gId = editId.getText().toString();
-//            String gPwd = editPwd.getText().toString();
 
             if (result.equals("success")) {
                 Intent intent = new Intent(MainActivity.this, home.class);
-//                intent.putExtra("usid", gId);
-                intent.putExtra("userid", editId.getText().toString());
-//                intent.putExtra("pwd", gPwd);
+                intent.putExtra("userid", editId.getText().toString().trim());
                 startActivity(intent);
                 finish();
 
-//                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
             }else{
 
                 Toast.makeText(getApplicationContext(), "로그인 정보를 다시 입력하세요.", Toast.LENGTH_LONG).show();

@@ -1,0 +1,36 @@
+<?php
+        include "connect.php";
+
+        $count=$_POST['count'];
+        $order=$_POST['order'];
+        $order_by=$_POST['order_by'];
+        $like_order=$_POST['like_order'];
+        $like_order_by=$_POST['like_order_by'];
+        $search=$_POST['search'];
+        $addsearch=addslashes($search);
+
+        if($count==0){
+                $min=$count;
+                $max=$count+10;
+        }else{
+                $min=$count*10;
+                $max=$count*10+10;
+        }
+
+        if(isset($count)){
+                $sql="select mCon.*, count(case when (select count(*) from cont_like where cont_like.con_num=mCon.con_num)>0 then 1 end) as mlike from mCon left join cont_like on mCon.con_num=cont_like.con_num where mCon.title like '%".$addsearch."%' group by mCon.con_num order by $order {$order_by}, $like_order $like_order_by limit 10 offset $min";
+//              $sql="select * from mCon";
+                $result=mysqli_query($con, $sql);
+                $result_json=array();
+
+                while($json_rows=mysqli_fetch_array($result)){
+                        array_push($result_json, array('title'=>$json_rows[0], 'cont'=>$json_rows[1], 'writer'=>$json_rows[2], 'con_num'=>$json_rows[3], 'con_date'=>$json_rows[4], 'img_src'=>$json_rows[5], 'mlike'=>$json_rows[6]));
+                }
+                $json=json_encode(array('result'=>$result_json), JSON_UNESCAPED_UNICODE);
+
+                echo $json;
+        }else{
+                echo "출력 실패";
+        }
+
+?>

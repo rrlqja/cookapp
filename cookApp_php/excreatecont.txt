@@ -1,0 +1,11 @@
+<?php
+        include "connect.php";
+
+        $title=urldecode($_POST["title"]);
+
+        $retitle=urldecode($title);
+        $sql="insert into mCon(title) values('{$title}')";
+        $result=mysqli_query($con, $sql);
+
+        echo $title;
+?>

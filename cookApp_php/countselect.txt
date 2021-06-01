@@ -1,4 +1,4 @@
-�<?php
+<?php
         include "connect.php";
 
         $count=$_POST['count'];
@@ -20,7 +20,7 @@
 //              $sql="select * from mCon where con_num=$count";
 //              $sql="select * from mCon order by $order $order_by limit 10 offset $min";
 //              $sql="select mCon.title, mCon.cont, mCon.writer_name, mCon.mdate, mCon.con_num, mCon.img_src, count(case when likecon.mlike>0 then 1 end) as mlike from mCon left join likecon on mCon.con_num=likecon.con_num group by mCon.con_num order by $order {$order_by}, $like_order $like_order_by limit 10 offset $min";
-                $sql="select mCon.title, mCon.cont, mCon.writer_name, mCon.mdate, mCon.con_num, mCon.img_src, count(case when (select count(*) from cont_like where cont_like.con_num=mCon.con_num)>0 then 1 end) as mlike from mCon left join cont_like on mCon.con_num=cont_like.con_num group by mCon.con_num order by $order {$order_by}, $like_order $like_order_by limit 10 offset $min";
+//              $sql="select mCon.title, mCon.cont, mCon.writer_name, mCon.mdate, mCon.con_num, mCon.img_src, count(case when (select count(*) from cont_like where cont_like.con_num=mCon.con_num)>0 then 1 end) as mlike from mCon left join cont_like on mCon.con_num=cont_like.con_num group by mCon.con_num order by $order {$order_by}, $like_order $like_order_by limit 10 offset $min";
                 $sql="select mCon.*, count(case when (select count(*) from cont_like where cont_like.con_num=mCon.con_num)>0 then 1 end) as mlike from mCon left join cont_like on mCon.con_num=cont_like.con_num group by mCon.con_num order by $order {$order_by}, $like_order $like_order_by limit 10 offset $min";
                 $result=mysqli_query($con, $sql);
 

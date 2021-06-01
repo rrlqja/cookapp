@@ -1,0 +1,14 @@
+<?php
+        include 'connect.php';
+
+        $str=urldecode($_POST['str']);
+        $addstr=addslashes($str);
+
+        $sql="insert into extb values('".$addstr."')";
+        if($result=mysqli_query($con, $sql)){
+                echo "성공";
+        }else{
+                echo "실패";
+        }
+        echo $str;
+?>

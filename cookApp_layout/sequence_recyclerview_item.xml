@@ -3,9 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="35dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp">
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,19 +15,25 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="3dp">
 
             <TextView
+                android:gravity="center"
+                android:background="#F9F9F6"
                 android:id="@+id/contview_sequence_num"
                 android:layout_weight="1"
                 android:layout_width="0dp"
-                android:layout_height="130dp">
+                android:layout_height="match_parent">
             </TextView>
             <TextView
+                android:paddingTop="10dp"
+                android:paddingRight="5dp"
+                android:background="#F9F9F6"
                 android:layout_weight="5"
                 android:id="@+id/contview_sequence_cont"
                 android:layout_width="0dp"
-                android:minHeight="130dp"
+                android:minHeight="100dp"
                 android:layout_height="wrap_content">
             </TextView>
         </LinearLayout>

@@ -1,0 +1,5 @@
+<form method="post" action="cont_like.php">
+        <input type="text" name="con_num"><br>
+        <input type="text" name="user_id"><br>
+        <input type="submit">
+</form>
