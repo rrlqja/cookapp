@@ -1,8 +1,9 @@
-<form method="post" action="countselect.php">
+<form method="post" action="search_countselect.php">
         <input type="text" name="count" placeholder="count"><br>
         <input type="text" name="order" placeholder="order"><br>
         <input type="text" name="order_by" placeholder="order_by"><br>
         <input type="text" name="like_order" placeholder="like_order"><br>
         <input type="text" name="like_order_by" placeholder="like_order_by"><br>
+        <input type="text" name="search" placeholder="search"><br>
         <input type="submit">
 </form>

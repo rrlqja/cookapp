@@ -26,7 +26,8 @@
                 array_push($season_result_json, array('season_num'=>$season_json_rows[0], 'season'=>$season_json_rows[1], 'season_we'=>$season_json_rows[2]));
         }
 
-        $sequence_sql="select sequence_num, sequence, sequence_img from cont_sequence where con_num={$con_num} order by sequence_num asc";
+//      $sequence_sql="select sequence_num, sequence, sequence_img from cont_sequence where con_num={$con_num} order by sequence_num asc";
+        $sequence_sql="select sequence_num, sequence, sequence_img from cont_sequence where con_num={$con_num}";
         $sequence_result=mysqli_query($con, $sequence_sql);
         $sequence_result_json=array();
         while($sequence_json_rows=mysqli_fetch_array($sequence_result)){
