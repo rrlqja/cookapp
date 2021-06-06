@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".createCont"
-    android:layout_marginTop="15dp">
+    tools:context=".createCont">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -62,11 +61,6 @@
                     android:onClick="getimg">
                 </ImageView>
             </LinearLayout>
-<!--            <ImageView-->
-<!--                android:id="@+id/testimg"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp">-->
-<!--            </ImageView>-->
             <TextView
                 android:background="#C8C7C3"
                 android:layout_width="match_parent"
@@ -108,7 +102,7 @@
                     android:layout_height="match_parent">
                 </ListView>
                 <Button
-                    android:backgroundTint="#B1FD6B"
+                    android:backgroundTint="#CFA4CE"
                     android:text="재료 추가"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -117,19 +111,6 @@
                     android:onClick="addingreList">
                 </Button>
             </LinearLayout>
-
-<!--            <Button-->
-<!--                android:text="edittext 보기"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="70dp"-->
-<!--                android:onClick="show_ingre_testlist">-->
-<!--            </Button>-->
-<!--            <TextView-->
-<!--                android:text="초기 텍스트"-->
-<!--                android:id="@+id/exedtx"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp">-->
-<!--            </TextView>-->
 
             <TextView
                 android:background="#C8C7C3"
@@ -151,7 +132,7 @@
                     android:layout_height="match_parent">
                 </ListView>
                 <Button
-                    android:backgroundTint="#B1FD6B"
+                    android:backgroundTint="#CFA4CE"
                     android:text="양념 추가"
                     android:textStyle="bold"
                     android:textColor="@color/black"
@@ -160,12 +141,6 @@
                     android:onClick="addseasonList">
                 </Button>
             </LinearLayout>
-<!--            <Button-->
-<!--                android:text="edittext 보기"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="70dp"-->
-<!--                android:onClick="show_season_testlist">-->
-<!--            </Button>-->
 
             <TextView
                 android:background="#C8C7C3"
@@ -197,94 +172,9 @@
                     android:onClick="addsequenceList">
                 </Button>
             </LinearLayout>
-<!--            <Button-->
-<!--                android:text="텍스트 이미지 출력"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="60dp"-->
-<!--                android:onClick="testtxtimg">-->
-<!--            </Button>-->
-<!--            <LinearLayout-->
-<!--                android:orientation="horizontal"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/txtimg_tx"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:gravity="center">-->
-<!--                </TextView>-->
-<!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:id="@+id/txtimg_iv2"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_weight="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="0dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="match_parent">&ndash;&gt;-->
-<!--&lt;!&ndash;                </ImageView>&ndash;&gt;-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/txtimg_iv"-->
-<!--                    android:layout_weight="1"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="match_parent">-->
-<!--                </ImageView>-->
-<!--            </LinearLayout>-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="600dp"-->
-<!--                android:orientation="vertical">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="300dp"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/aa1"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="300dp">-->
-<!--                    </ImageView>-->
-<!--                    <ImageView-->
-<!--                        android:id="@+id/aa2"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="300dp">-->
-<!--                    </ImageView>-->
-<!--                </LinearLayout>-->
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="300dp"-->
-<!--                    android:orientation="horizontal">-->
-
-<!--                    <ImageView-->
-<!--                        android:id="@+id/aa3"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="300dp">-->
-<!--                    </ImageView>-->
-<!--                    <ImageView-->
-<!--                        android:id="@+id/aa4"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="300dp">-->
-<!--                    </ImageView>-->
-<!--                </LinearLayout>-->
-<!--            </LinearLayout>-->
-<!--            <Button-->
-<!--                android:id="@+id/bb1"-->
-<!--                android:text="AA테스트"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="100dp">-->
-<!--            </Button>-->
-<!--            <Button-->
-<!--                android:id="@+id/toststr"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="100dp">-->
-<!--            </Button>-->
 
             <Button
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:id="@+id/save_recipe"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
@@ -292,92 +182,6 @@
                 android:backgroundTint="#7A7D11"
                 android:onClick="saveRecipe">
             </Button>
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="vertical">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/sv_ingre_num"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="100dp">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/sv_ingre"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="100dp">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/sv_ingre_we"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="100dp">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/sv_season_num"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="100dp">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/sv_season"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="100dp">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/sv_season_we"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="100dp">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/sv_sequence_num"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="100dp">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/sv_sequence"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="100dp">-->
-<!--                </TextView>-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/sv_sequence_img"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="200dp">-->
-<!--                </ImageView>-->
-<!--            </LinearLayout>-->
-<!--            <TextView-->
-<!--                android:text="resultresultingres"-->
-<!--                android:id="@+id/resultingre"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="100dp">-->
-<!--            </TextView>-->
-
-<!--            <LinearLayout-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="300dp"-->
-<!--                android:orientation="horizontal">-->
-
-<!--                <TextView-->
-<!--                    android:id="@+id/exexsvtx1"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent">-->
-<!--                </TextView>-->
-<!--                <TextView-->
-<!--                    android:id="@+id/exexsvtx2"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent">-->
-<!--                </TextView>-->
-<!--                <ImageView-->
-<!--                    android:id="@+id/exexsviv1"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent">-->
-<!--                </ImageView>-->
-<!--            </LinearLayout>-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/tv1"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="200dp">-->
-<!--            </TextView>-->
         </LinearLayout>
     </ScrollView>
 

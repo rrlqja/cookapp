@@ -79,13 +79,9 @@ public class createCont extends AppCompatActivity {
 
     static boolean imgpass = false;
 
-//    TextView textView1;
-//    ImageView imageView2;
     ListView listView1, listView2;
 
     RecyclerView recyclerView1;
-
-//    TextView textView2;
 
     ArrayList<Integer> ingre_num = new ArrayList<>();
     ArrayList<String> ingre_list = new ArrayList<>();
@@ -110,9 +106,6 @@ public class createCont extends AppCompatActivity {
     ArrayList<sequence_item> sequence_items = new ArrayList<>();
     sequence_item sequence_item;
 
-//    TextView txttv;
-//    ImageView txtiv;
-
     static int Pos = 0;
 
     String create_url = "http://15.165.241.115/db/createcont.php";
@@ -130,28 +123,13 @@ public class createCont extends AppCompatActivity {
     static Uri[] sequence_imgs_urls = new Uri[20];
     static String[] sequence_imgs_absolute_urls = new String[20];
 
-
-//    TextView svtx1, svtx2, svtx3, svtx4, svtx5, svtx6, svtx7, svtx8;
-//    ImageView sviv1;
-
     saveCont saveCont;
     exsvcont exsvcont;
-
-    ArrayList<Bitmap> resizeBits = new ArrayList<>();
-
-
-    static String[] result_ingre = new String[10];
-//    TextView resultingre;
-
-    Activity activity = this;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createcont);
-
-//        saveContItem = new saveContItem();
 
         editText1 = findViewById(R.id.title);
         imageView1 = findViewById(R.id.ibimg);
@@ -195,25 +173,7 @@ public class createCont extends AppCompatActivity {
                 cont_pass = true;
             }
         });
-
-//        svtx1 = findViewById(R.id.sv_ingre_num);
-//        svtx2 = findViewById(R.id.sv_ingre);
-//        svtx3 = findViewById(R.id.sv_ingre_we);
-//        svtx4 = findViewById(R.id.sv_season_num);
-//        svtx5 = findViewById(R.id.sv_season);
-//        svtx6 = findViewById(R.id.sv_season_we);
-//        svtx7 = findViewById(R.id.sv_sequence_num);
-//        svtx8 = findViewById(R.id.sv_sequence);
-//        sviv1 = findViewById(R.id.sv_sequence_img);
-//        resultingre = findViewById(R.id.resultingre);
-
-//        textView1 = findViewById(R.id.tv1);
-//        textView2 = findViewById(R.id.exedtx);
         imageView1 = findViewById(R.id.ibimg);
-//        imageView2 = findViewById(R.id.testimg);
-
-//        txttv = findViewById(R.id.txtimg_tx);
-//        txtiv = findViewById(R.id.txtimg_iv);
 
         ingre_listAdapter = new ingrelistAdapter();
         season_listAdapter = new seasonlistAdapter();
@@ -239,8 +199,6 @@ public class createCont extends AppCompatActivity {
         Intent getintent = getIntent();
         user_id = getintent.getStringExtra("userid");
 
-//        textView1.setText(user_id);
-
         recyclerView1 = findViewById(R.id.sequence);
         recyclerView1.setLayoutManager(new LinearLayoutManager(this){
             @Override
@@ -258,19 +216,7 @@ public class createCont extends AppCompatActivity {
             }
         }, 1000);
 
-//        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-
     }
-
-//    public static void verifyStoragePermissions(Activity activity) {
-//        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//
-//        if (permission != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(
-//                    activity, PERMISSIONS_STROAGE, REQUEST_EXTERNAL_STORAGE
-//            );
-//        }
-//    }
 
     public void initadp() {
         sequence_recyclerAdapter = new sequencerecycleradapter(sequence_items);
@@ -278,8 +224,6 @@ public class createCont extends AppCompatActivity {
         sequence_recyclerAdapter.setOnItemClickListener(new sequencerecycleradapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-//                Toast.makeText(createCont.this, "아이템 터치", Toast.LENGTH_LONG).show();
-//                txttv.setText(String.valueOf(position));
 
                 Intent intent = new Intent();
                 Pos = position;
@@ -358,7 +302,6 @@ public class createCont extends AppCompatActivity {
             }
 
             sequence_items.get(Pos).setSequence_img(bitmap);
-//            sequence_recyclerAdapter.notifyItemChanged(Pos);
             sequence_recyclerAdapter.notifyDataSetChanged();
 
         }
@@ -375,35 +318,6 @@ public class createCont extends AppCompatActivity {
             cursor.close();
         }
         return res;
-    }
-
-    public String getpth(Context ctx, Uri uri) {
-        final ContentResolver contentResolver = ctx.getContentResolver();
-
-        if (contentResolver == null) {
-            return null;
-        }
-
-        String filepath = ctx.getApplicationInfo().dataDir + File.separator + System.currentTimeMillis();
-
-        File file = new File(filepath);
-        try {
-            InputStream inputStream = contentResolver.openInputStream(uri);
-            if (inputStream == null) {
-                return null;
-            }
-            OutputStream outputStream = new FileOutputStream(file);
-            byte[] buf = new byte[1024];
-            int len;
-            while ((len = inputStream.read(buf)) > 0) {
-                outputStream.write(buf, 0, len);
-                outputStream.close();
-                inputStream.close();
-            }
-        } catch (Exception e) {
-            return null;
-        }
-        return file.getAbsolutePath();
     }
 
     public void addingreList(View view) {
@@ -465,7 +379,6 @@ public class createCont extends AppCompatActivity {
 
         for (int i = 0; i < ingre_count; i++) {
             if (ingre_listAdapter.geted1(i) == null) {
-//                textView2.setText("값이 없다");
             } else {
                 if ((ingre_listAdapter.geted1(i).getName() == null) && (ingre_listAdapter.geted1(i).getWeight() == null)) {
                     ingre_pass = false;
@@ -508,7 +421,6 @@ public class createCont extends AppCompatActivity {
 
         for (int i = 0; i < season_count; i++) {
             if (season_listAdapter.geted1(i) == null) {
-//                textView2.setText("값이 없다");
             } else {
                 if ((season_listAdapter.geted1(i).getName() == null) && (season_listAdapter.geted1(i).getWeight() == null)) {
                     season_pass = false;
@@ -606,7 +518,6 @@ public class createCont extends AppCompatActivity {
         sequence_cont.clear();
         sequence_img.clear();
 
-//        title = editText1.getText().toString();
         cont = editText2.getText().toString();
 
         getIngre();
@@ -659,7 +570,6 @@ public class createCont extends AppCompatActivity {
                 public void run() {
                     Intent intent = new Intent(createCont.this, home.class);
                     intent.putExtra("userid", user_id);
-//                    startActivityForResult(intent, 1);
 
                     home home = (com.example.cookapp1.home) com.example.cookapp1.home._home;
                     home.finish();
@@ -721,15 +631,12 @@ public class createCont extends AppCompatActivity {
                 conn.setReadTimeout(10000);
                 conn.setConnectTimeout(10000);
                 conn.setRequestMethod("POST");
-//                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
                 conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
                 conn.setDoOutput(true);
                 conn.connect();
 
                 DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-//                wr.writeBytes("\r\n--" + boundary + "\r\n");
-//                wr.writeBytes("Content-Disposition: form-data; name=\"\" \r\n\r\n" +"");
-//
+
                 wr.writeBytes("\r\n--" + boundary + "\r\n");
                 wr.writeBytes("Content-Disposition: form-data; name=\"ingre_count\" \r\n\r\n" + ingre_count);
                 wr.writeBytes("\r\n--" + boundary + "\r\n");
@@ -749,8 +656,6 @@ public class createCont extends AppCompatActivity {
                 wr.writeBytes("Content-Type: application/octet-stream\r\n\r\n");
                 ParcelFileDescriptor r = createCont.this.getContentResolver().openFileDescriptor(cont_img_uri, "r", null);
                 FileInputStream fileInputStream = new FileInputStream(r.getFileDescriptor());
-
-//                FileInputStream fileInputStream = new FileInputStream(cont_img_absolute_uri);
 
                 int bytesAvailable = fileInputStream.available();
                 int maxBufferSize = 5 * 1024 * 1024;
@@ -813,11 +718,6 @@ public class createCont extends AppCompatActivity {
                 wr.writeBytes("\r\n--" + boundary + "--\r\n");
                 wr.flush();
 
-//                OutputStream outputStream = conn.getOutputStream();
-//                outputStream.write(param.getBytes("UTF-8"));
-//                outputStream.flush();
-//                outputStream.close();
-
                 int response = conn.getResponseCode();
 
                 InputStream iStream;
@@ -840,7 +740,6 @@ public class createCont extends AppCompatActivity {
                 bufferedReader.close();
 
                 return sb.toString();
-//                return exsvcont;
 
             } catch (Exception e) {
                 return null;

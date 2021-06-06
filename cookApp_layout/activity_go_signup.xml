@@ -37,6 +37,7 @@
                 </EditText>
 
                 <Button
+                    android:textStyle="bold"
                     android:id="@+id/id_chk"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

@@ -50,7 +50,6 @@ public class contview_sequence_recyclerview_Adapter extends RecyclerView.Adapter
             textView2 = itemView.findViewById(R.id.contview_sequence_cont);
             imageView1 = itemView.findViewById(R.id.contview_sequence_img);
 
-
 //            Matrix matrix1 = new Matrix();
 //            matrix1.postScale(1.0f, 1.0f);
 //            imageView1.setImageMatrix(matrix1);

@@ -86,10 +86,6 @@ public class contView extends AppCompatActivity {
 
         _contview = contView.this;
 
-//        Matrix matrix1 = new Matrix();
-//        matrix1.postScale(1.0f, 1.0f);
-//        cont_img_imgview.setImageMatrix(matrix1);
-
         ingre_list.clear();
         season_list.clear();
         sequence_list.clear();
@@ -97,7 +93,6 @@ public class contView extends AppCompatActivity {
         Intent getintent = getIntent();
         con_num = getintent.getStringExtra("pos");
         user_id = getintent.getStringExtra("userid");
-        //        int position = getintent.getIntExtra("position", 0);
 
         ingre_recyclerview = findViewById(R.id.ingre_recycleview);
         ingre_recyclerview.setLayoutManager(new LinearLayoutManager(this){
@@ -150,44 +145,11 @@ public class contView extends AppCompatActivity {
 
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.getData() != null) {
-//            Intent getintent = data;
-//            con_num = getintent.getStringExtra("con_num");
-//            user_id = getintent.getStringExtra("user_id");
-//
-//            delCont delCont = new delCont();
-//            delCont.execute(con_num);
-//            Toast.makeText(contView.this, "삭제하는 중 입니다.", Toast.LENGTH_LONG).show();
-//
-//            Handler handler = new Handler();
-//            handler.postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                    Intent intent = new Intent(contView.this, home.class);
-//                    intent.putExtra("userid", user_id);
-//
-//                    home home = (com.example.cookapp1.home) com.example.cookapp1.home._home;
-//                    home.finish();
-//
-//                    startActivity(intent);
-//                    finish();
-//
-//                }
-//            }, 1500);
-//        }
-//    }
-
     public void del_cont(View view) {
         Intent delintent = new Intent(contView.this, ask_del_cont.class);
         delintent.putExtra("con_num", con_num);
         delintent.putExtra("user_id", user_id);
 
-//        startActivityForResult(intent, 1);
         startActivity(delintent);
     }
 
@@ -202,7 +164,6 @@ public class contView extends AppCompatActivity {
     public void sequenceInitadapt() {
         sequence_adapter = new contview_sequence_recyclerview_Adapter(sequence_list);
         sequence_recyclerview.setAdapter(sequence_adapter);
-//        sequence_adapter.notifyDataSetChanged();
         sequence_adapter.notifyItemChanged(sequence_list.size());
     }
 
@@ -222,10 +183,8 @@ public class contView extends AppCompatActivity {
         for (int i = 0; i < contlike_user.size(); i++) {
             if (contlike_user.get(i) != null) {
                 if (contlike_user.get(i).equals(user_id)) {
-//                    contlike_textview.setBackgroundColor(Color.parseColor("#FA5882"));
                     likeheart_imgview.setImageResource(R.drawable.yesheart);
                 }else{
-//                    contlike_textview.setBackgroundColor(Color.parseColor("#5795F8"));
                     likeheart_imgview.setImageResource(R.drawable.noheart);
                 }
             }
@@ -234,10 +193,8 @@ public class contView extends AppCompatActivity {
 
     public void setcontlike_color(String string) {
         if (string.equals("delete")) {
-//            contlike_textview.setBackgroundColor(Color.parseColor("#5795F8"));
             likeheart_imgview.setImageResource(R.drawable.noheart);
         } else if (string.equals("insert")) {
-//            contlike_textview.setBackgroundColor(Color.parseColor("#FA5882"));
             likeheart_imgview.setImageResource(R.drawable.yesheart);
         }
     }
@@ -342,7 +299,6 @@ public class contView extends AppCompatActivity {
 
                     contlike_textview.append(contlike);
 
-//                    title_textview.append(contlike);
                 }
 
                 JSONObject contlike_user_result_json;
@@ -351,7 +307,6 @@ public class contView extends AppCompatActivity {
                     contlike_user_result_json = contlike_userjArr.getJSONObject(i);
                     contlike_user.add(contlike_user_result_json.getString("contlike_user"));
 
-//                    title_textview.append(contlike_user_result_json.getString("contlike_user"));
 
                 }
 
@@ -364,9 +319,6 @@ public class contView extends AppCompatActivity {
                     ingre.setWeight(ingre_result_json.getString("ingre_we"));
                     ingre_list.add(ingre);
 
-//                    title_textview.append(ingre_result_json.getString("ingre"));
-//                    title_textview.append(ingre_result_json.getString("ingre_we"));
-
                 }
 
                 JSONObject season_result_json;
@@ -377,9 +329,6 @@ public class contView extends AppCompatActivity {
                     season.setName(season_result_json.getString("season"));
                     season.setWeight(season_result_json.getString("season_we"));
                     season_list.add(season);
-
-//                    title_textview.append(season_result_json.getString("season"));
-//                    title_textview.append(season_result_json.getString("season_we"));
                 }
 
                 JSONObject sequence_result_json;
@@ -391,13 +340,6 @@ public class contView extends AppCompatActivity {
                     sequence.setSequence(sequence_result_json.getString("sequence"));
 
                     sequence.setSequence_img(oriURL + sequence_result_json.getString("sequence_img_src").substring(2));
-//                    String imgurl = oriURL + sequence_result_json.getString("sequence_img_src").substring(2);
-//                    bitchange bitchange = new bitchange();
-//                    bitchange.execute(imgurl);
-
-//                    String imgurl = oriURL + sequence_result_json.getString("sequence_img_src").substring(2);
-//                    sequence_bitchange sequence_bitchange = new sequence_bitchange();
-//                    sequence_bitchange.execute(imgurl);
 
                     sequence_list.add(sequence);
                 }
@@ -509,97 +451,6 @@ public class contView extends AppCompatActivity {
 
         protected void onPostExecute(Bitmap result) {
             cont_img_imgview.setImageBitmap(result);
-        }
-    }
-
-    public class sequence_bitchange extends AsyncTask<String, Void, Bitmap> {
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            String urli = strings[0];
-            Bitmap bitmap = null;
-            try {
-                InputStream in = new URL(urli).openStream();
-                bitmap = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                return null;
-            }
-
-            sequence_img_list.add(bitmap);
-
-            return bitmap;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-//            for (int i = 0; i < sequence_list.size(); i++) {
-//                if (sequence_img_list.get(i) != null) {
-//                    sequence_list.get(i).setSequence_img(sequence_img_list.get(i));
-//                }
-//            }
-//
-//            sequence_adapter.notifyDataSetChanged();
-        }
-    }
-
-    public class delCont extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            return getS(strings);
-        }
-
-        protected void onPostExecute(String result) {
-            if (result == "success") {
-                del_result = "삭제하였습니다.";
-            }else{
-                del_result = "삭제에 실패하였습니다";
-            }
-        }
-
-        public String getS(String[] strings) {
-            String con_num = strings[0];
-
-            HttpURLConnection conn = null;
-            String param = "con_num=" + con_num;
-
-            try {
-                URL url = new URL(delUrl);
-                conn = (HttpURLConnection) url.openConnection();
-
-                conn.setReadTimeout(5000);
-                conn.setConnectTimeout(5000);
-                conn.setRequestMethod("POST");
-                conn.connect();
-
-                OutputStream outputStream = conn.getOutputStream();
-                outputStream.write(param.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
-
-                int response = conn.getResponseCode();
-
-                InputStream iStream;
-                if (response == HttpURLConnection.HTTP_OK) {
-                    iStream = conn.getInputStream();
-                } else {
-                    iStream = conn.getErrorStream();
-                }
-
-                InputStreamReader inputStreamReader = new InputStreamReader(iStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line = "";
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-
-                return sb.toString();
-
-            } catch (Exception e) {
-                return null;
-            }
         }
     }
 

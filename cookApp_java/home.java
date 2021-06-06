@@ -37,7 +37,6 @@ public class home extends AppCompatActivity {
     public static Activity _home;
 
     TextView textView1;
-//    TextView textView2;
 
     Button button1, button2, button3;
     SwipeRefreshLayout swipeRefreshLayout1;
@@ -100,7 +99,6 @@ public class home extends AppCompatActivity {
 
         _home = home.this;
 
-//        textView2 = findViewById(R.id.tx2);
         button1 = findViewById(R.id.bt1);
         button2 = findViewById(R.id.bt2);
         swipeRefreshLayout1 = findViewById(R.id.swip1);
@@ -139,7 +137,6 @@ public class home extends AppCompatActivity {
         if (searchet.getText().toString().trim().equals("") || searchet.getText().toString().trim() == null) {
             Toast.makeText(home.this, "값이 없음", Toast.LENGTH_LONG).show();
         } else {
-//            Toast.makeText(home.this, "값이 있음", Toast.LENGTH_LONG).show();
 
             count = 0;
             titleallList.clear();
@@ -151,8 +148,6 @@ public class home extends AppCompatActivity {
 
             string_search = searchet.getText().toString().trim();
 
-//            getJSON_search json_search = new getJSON_search();
-//            json_search.execute(search_url, String.valueOf(count), order[point_order], order_by[point_order_by], like_order[point_like_order], like_order_by[point_like_order_by], string_search);
             getJSON = new getJSON();
             getJSON.execute(search_url, String.valueOf(count), order[point_order], order_by[point_order_by], like_order[point_like_order], like_order_by[point_like_order_by], string_search);
 
@@ -377,7 +372,6 @@ public class home extends AppCompatActivity {
 
                     llist.add(recyclerItem);
 
-//                    textView2.setText(String.valueOf(recyclerItemList.size()));
                 }
 
             } catch (Exception e) {
@@ -386,106 +380,6 @@ public class home extends AppCompatActivity {
         }
 
     }
-
-//    public class getJSON_search extends AsyncTask<String, Void, String> {
-//        @Override
-//        protected String doInBackground(String... strings) {
-//            return getS(strings);
-//        }
-//
-//        protected void onPostExecute(String result) {
-//            getJ(result);
-//        }
-//
-//        private String getS(String[] strings){
-//            String str=strings[0];
-//            String str_count = strings[1];
-//            String order=strings[2];
-//            String order_by = strings[3];
-//            String like_order = strings[4];
-//            String like_order_by = strings[5];
-//            String search = strings[6];
-//
-//            HttpURLConnection conn = null;
-//            String param = "count=" + str_count + "&order=" + order + "&order_by=" + order_by + "&like_order=" + like_order + "&like_order_by=" + like_order_by + "&search=" + search;
-//            try {
-//                URL url = new URL(str);
-//                conn = (HttpURLConnection) url.openConnection();
-//
-//                conn.setReadTimeout(5000);
-//                conn.setConnectTimeout(5000);
-//                conn.setRequestMethod("POST");
-//                conn.connect();
-//
-//                OutputStream outputStream = conn.getOutputStream();
-//                outputStream.write(param.getBytes("UTF-8"));
-//                outputStream.flush();
-//                outputStream.close();
-//
-//                int response = conn.getResponseCode();
-//
-//                InputStream iStream;
-//                if (response == HttpURLConnection.HTTP_OK) {
-//                    iStream = conn.getInputStream();
-//                } else {
-//                    iStream = conn.getErrorStream();
-//                }
-//
-//                InputStreamReader inputStreamReader = new InputStreamReader(iStream, "UTF-8");
-//                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//
-//                StringBuilder sb = new StringBuilder();
-//                String line = "";
-//
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    sb.append(line);
-//                }
-//
-//                bufferedReader.close();
-//
-//                return sb.toString();
-//
-//            } catch (Exception e) {
-//                return null;
-//            }
-//
-//        }
-//
-//        private void getJ(String page) {
-//
-//            try {
-//                JSONObject json = new JSONObject(page);
-//
-//                JSONArray jArr = json.getJSONArray("result");
-//
-//                JSONObject result_json;
-//
-//                for (int i = 0; i < jArr.length(); i++) {
-//
-//                    result_json = jArr.getJSONObject(i);
-//
-//                    recyclerItem = new RecyclerItem();
-//                    recyclerItem.setTitle(result_json.getString("title"));
-//                    recyclerItem.setWriter(result_json.getString("writer"));
-//                    recyclerItem.setCont(result_json.getString("cont"));
-//                    recyclerItem.setLike(result_json.getInt("mlike"));
-//                    recyclerItem.setDate(result_json.getString("con_date"));
-//                    recyclerItem.setNum(result_json.getInt("con_num"));
-//                    recyclerItem.setImg(original_url + result_json.getString("img_src").substring(2));
-//
-//                    recyclerItemList.add(recyclerItem);
-//
-//                    llist.add(recyclerItem);
-//
-////                    textView2.setText(String.valueOf(recyclerItemList.size()));
-//                }
-//
-//            } catch (Exception e) {
-//
-//            }
-//        }
-//    }
-
 
     public class getBit extends AsyncTask<String, Void, Bitmap> {
         @Override
@@ -542,12 +436,6 @@ public class home extends AppCompatActivity {
 
                         dataMore();
 
-//                        if (searchet.getText().toString().trim().equals("") || searchet.getText().toString().trim() == null) {
-//                            dataMore();
-//                        } else {
-//                            search_dataMore();
-//                        }
-
                         isLoading = true;
                         Toast.makeText(home.this, "로딩중", Toast.LENGTH_LONG).show();
                     }
@@ -577,21 +465,6 @@ public class home extends AppCompatActivity {
             }
         }, 2000);
 
-    }
-
-    private void search_dataMore() {
-
-//        getJSON_search getJSON_search = new getJSON_search();
-//        getJSON_search.execute(scrollJson_url, String.valueOf(count), order[point_order], order_by[point_order_by], like_order[point_like_order], like_order_by[point_like_order_by], string_search);
-
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                recyclerViewAdapter.notifyItemChanged(llist.size());
-                isLoading = false;
-            }
-        }, 2000);
     }
 
     public void createcont(View view) {
