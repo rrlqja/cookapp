@@ -8,23 +8,23 @@
 ## 구현
 
 - 로그인<br/>
-  ![login](/resources/6.png)
+  ![login](./resources/6.png)
 - 회원가입<br/>
-  ![signup](/resources/7.png)
+  ![signup](./resources/7.png)
 - 사용자들의 레시피 조회<br/>
-  ![login](/resources/8.png)
+  ![login](./resources/8.png)
 - 레시피 상세 조회<br/>
-  ![login](/resources/9.png)
+  ![login](./resources/9.png)
 - 레시피 및 조리법 조회<br/>
-  ![login](/resources/10.png)
+  ![login](./resources/10.png)
 - 레시피 검색<br/>
-  ![login](/resources/11.png)
+  ![login](./resources/11.png)
 - 레시피 정렬 및 좋아요<br/>
-  ![login](/resources/12.png)
+  ![login](./resources/12.png)
 - 레시피 등록<br/>
-  ![login](/resources/13.png)
+  ![login](./resources/13.png)
 - 레시피 등록<br/>
-  ![login](/resources/14.png)  
+  ![login](./resources/14.png)  
 
 
 
