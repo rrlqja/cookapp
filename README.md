@@ -8,7 +8,7 @@
 ## 구현
 
 - 로그인<br/>
-  ![login](./resources/6.png)
+  ![login](/resources/6.png)
 - 회원가입<br/>
   ![signup](./resources/7.png)
 - 사용자들의 레시피 조회<br/>
